@@ -21,16 +21,15 @@ Feature/ClassName/MethodName/Datum
 
 
 # List of domain concepts
-Domain Concept Identification
-Nouns (substantiv):
-Material (Name, recycling category / instruction, estimated lifespan, environmental impact value )
-Product (Name, category, estimated lifespan, materials) 
-Menu
-Account
+## Nouns :  
+Material (Name, recycling category / instruction, estimated lifespan, environmental impact value )  
+Product (Name, category, estimated lifespan, materials)   
+Menu  
+Account  
 
-Verbs (saker man gör):
-Create (create objects/products with chosen material, accounts)
-Change ( Change an object e.g Changing the material of an existing product)
-List / View (Display created products / Materials  / material usage / view detailed list etc… )
-Delete (A created item/product etc)
-Calculate ( environmental impact, lifespan, price of product)
+## Verbs:  
+Create (create objects/products with chosen material, accounts)  
+Change ( Change an object e.g Changing the material of an existing product)  
+List / View (Display created products / Materials  / material usage / view detailed list etc… )  
+Delete (A created item/product etc)  
+Calculate ( environmental impact, lifespan, price of product)  
