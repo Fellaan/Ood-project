@@ -1,0 +1,28 @@
+@startuml OODProject
+title OODProject
+
+Class Main {
+
+}
+
+Class Menu {
+    
+}
+
+Class Product {
+
+}
+
+Class Material {
+
+}
+
+Class Account {
+    
+}
+Main "uses"--> Account
+Menu "Manage"--> Product
+Menu "Manage"--> Material
+Account "uses"--> Menu
+Product "uses" --> Material
+@enduml
