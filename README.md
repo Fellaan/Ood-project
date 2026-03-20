@@ -15,8 +15,8 @@ Johan - Software Developer
 Isak - Software Developer  
 
 # Git workflow description
-A branch named version/development which goes parallel to main
-Branch Structure:  
+A branch named version/development which goes parallel to main  
+## Branch Structure:  
 Feature/ClassName/MethodName/Datum
 
 
