@@ -8,11 +8,11 @@ We will make a menu based program that is run in the console without a GUI.
 The program creates, lists, views and calculates the materials and products environmental impact aswell as the cost of making the products.
 
 # Team roles:
-Paul - software Developer
-Felix - software Developer
-Leo - software Developer
-Johan - software Developer
-Isak - software Developer
+Paul - Software Developer:
+Felix - Software Developer:
+Leo - Software Developer:
+Johan - Software Developer:
+Isak - Software Developer:
 
 # Git workflow description
 A branch named version/development which goes parallel to main
