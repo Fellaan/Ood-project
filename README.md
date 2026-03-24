@@ -22,8 +22,8 @@ Feature/ClassName/MethodName/Datum
 
 # List of domain concepts
 ## Nouns :  
-Material (Name, recycling category / instruction, estimated lifespan, environmental impact value )  
-Product (Name, category, estimated lifespan, materials)   
+Material  
+Product  
 Menu  
 Account  
 Name  
