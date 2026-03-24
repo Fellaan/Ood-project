@@ -26,6 +26,11 @@ Material (Name, recycling category / instruction, estimated lifespan, environmen
 Product (Name, category, estimated lifespan, materials)   
 Menu  
 Account  
+Name  
+Recycling Category  
+Product Category  
+Lifespan
+Environmental Impact  
 
 ## Verbs:  
 Create (create objects/products with chosen material, accounts)  
