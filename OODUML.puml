@@ -5,9 +5,6 @@ Class Main {
 
 }
 
-Class Menu {
-    
-}
 
 Class Product {
 
@@ -17,12 +14,31 @@ Class Material {
 
 }
 
-Class Account {
+Class ImpactCalculationStrategy {
+
+}
+
+Class RecyclingGuidance  {
     
 }
-Main "uses"--> Account
-Menu "Manage"--> Product
-Menu "Manage"--> Material
-Account "uses"--> Menu
-Product "uses" --> Material
+
+Class RecyclingCategory {
+
+}
+
+Class LoginManager {
+
+}
+
+Class Account {
+
+}
+
+Product"1" *-- "1..*"Material
+Product --> ImpactCalculationStrategy : uses
+Product --> RecyclingGuidance : uses
+Material --> ImpactCalculationStrategy : uses
+LoginManager "1" *-- "0..*" Account
+RecyclingGuidance --> RecyclingCategory : uses
+Material"1..*" o-- "1" RecyclingCategory
 @enduml
