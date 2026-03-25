@@ -1,6 +1,6 @@
 Week 2 - CRC and responsibility sentences  
   
-Class name Product  
+## Class name Product  
 ------------------------------------------------------------------------------------  
 Responsibility                                | Collaboration  
 ------------------------------------------------------------------------------------  
