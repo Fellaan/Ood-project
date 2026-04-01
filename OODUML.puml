@@ -1,20 +1,81 @@
 @startuml OODProject
 title OODProject
 
+Class ConsoleUI {
+   + Menuloop()
+   + readInput()
+   + printOutput()
+
+}
+
 Class Main {
+    Hello, i run things!
+
+}
+
+Class Material {
+   + String name
+   + RecyclingCategory : Category
+   + int EnvironmentalImpact
+
+}
+
+Class MaterialManager {
+    + Arraylist : Material[]
+    + addMaterial()
+    + removeMaterial()
+
+}
+
+Class MaterialApplicationService {
+    + addMaterial()
+    + listMaterials()
+    + getDetails()
 
 }
 
 
 Class Product {
+    + String name
+    + RecyclingCategory : Category
+    + Arraylist : Material[]
 
 }
 
-Class Material {
+Class ProductManager {
+    + Arraylist : Product[]
+    + createProduct()
+    + removeProduct()
 
 }
 
-Class ImpactCalculationStrategy {
+Class ProductApplicationService {
+    + createProduct()
+    + listProduct()
+    + getDetails()
+    + calculateImpact()
+
+}
+
+
+
+Interface ImpactCalculationStrategy {
+    + calculateImpact()
+}
+
+Class SimpleSumStrategy {
+    + calculateImpact()
+
+
+}
+
+Class WeightedByLifespanStrategy {
+    + calculateImpact()
+
+}
+
+Class WeightedSumStrategy {
+    + calculateImpact()
 
 }
 
@@ -22,23 +83,42 @@ Class RecyclingGuidance  {
     
 }
 
-Class RecyclingCategory {
+Class RecyclingCategory {   
 
 }
 
-Class LoginManager {
+Class AccountManager {
+    - Arraylist : accounts[]
 
 }
 
 Class Account {
+    - username
+    - password
+    - accountPrivilages
 
 }
 
+Class LoginService {
+    + login()
+    + logout()
+
+}
+
+ConsoleUI ..> LoginService : uses
+ConsoleUI ..> ProductApplicationService : uses
+ConsoleUI ..> MaterialApplicationService : uses
+MaterialManager <.. MaterialApplicationService : uses
 Product"1" *-- "1..*"Material
-Product --> ImpactCalculationStrategy : uses
-Product --> RecyclingGuidance : uses
-Material --> ImpactCalculationStrategy : uses
-LoginManager "1" *-- "0..*" Account
-RecyclingGuidance --> RecyclingCategory : uses
+Product"1" *-- "1..*"ProductManager
+ProductManager <.. ProductApplicationService : uses
+Material"1..*" *-- "1" MaterialManager
+LoginService --> AccountManager : uses
+AccountManager "1" *-- "0..*" Account
+ImpactCalculationStrategy <|-- SimpleSumStrategy : implements
+ImpactCalculationStrategy <|-- WeightedByLifespanStrategy : implements
+ImpactCalculationStrategy <|-- WeightedSumStrategy : implements
+ProductApplicationService ..> ImpactCalculationStrategy : uses
 Material"1..*" o-- "1" RecyclingCategory
+RecyclingGuidance --> RecyclingCategory : uses
 @enduml
