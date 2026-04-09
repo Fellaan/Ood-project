@@ -1,15 +1,49 @@
 @startuml OODProject
 title OODProject
 
+Class Main {
+    Hello, i run things!
+
+}
+rectangle PresentationLayer {
 Class ConsoleUI {
    + Menuloop()
    + readInput()
    + printOutput()
 
 }
+}
+rectangle ApplicationLayer {
+Class ProductApplicationService {
+    + Arraylist : Product[]
+    + createProduct()
+    + listProduct()
+    + getDetails()
+    + calculateImpact()
 
-Class Main {
-    Hello, i run things!
+}
+
+
+Class LoginService {
+    - Arraylist : Account[]
+    + login()
+    + logout()
+
+}
+Class MaterialApplicationService {
+    + Arraylist : Material[]
+    + addMaterial()
+    + listMaterials()
+    + getDetails()
+
+}
+}
+
+rectangle DomainLayer {
+Class Account {
+    - username
+    - password
+    - accountPrivilages
 
 }
 
@@ -20,40 +54,10 @@ Class Material {
 
 }
 
-Class MaterialManager {
-    + Arraylist : Material[]
-    + addMaterial()
-    + removeMaterial()
-
-}
-
-Class MaterialApplicationService {
-    + addMaterial()
-    + listMaterials()
-    + getDetails()
-
-}
-
-
 Class Product {
-    + String name
-    + RecyclingCategory : Category
     + Arraylist : Material[]
-
-}
-
-Class ProductManager {
-    + Arraylist : Product[]
-    + createProduct()
-    + removeProduct()
-
-}
-
-Class ProductApplicationService {
-    + createProduct()
-    + listProduct()
-    + getDetails()
-    + calculateImpact()
+    + String name
+    + int estimatedLifespan
 
 }
 
@@ -74,51 +78,55 @@ Class WeightedByLifespanStrategy {
 
 }
 
-Class WeightedSumStrategy {
-    + calculateImpact()
-
-}
 
 Class RecyclingGuidance  {
+    + buildSingleMaterialGuidance()
+    + buildMixedMaterialGuidance()
     
 }
-
-Class RecyclingCategory {   
-
 }
 
-Class AccountManager {
-    - Arraylist : accounts[]
+' Class AccountManager {
+'     - Arraylist : accounts[]
+'     + addAccount()
+'     + removeAccount()
 
-}
+' }
 
-Class Account {
-    - username
-    - password
-    - accountPrivilages
+' Class MaterialManager {
+'     + Arraylist : Material[]
+'     + addMaterial()
+'     + removeMaterial()
 
-}
+' }
 
-Class LoginService {
-    + login()
-    + logout()
+' Class ProductManager {
+'     + Arraylist : Product[]
+'     + createProduct()
+'     + removeProduct()
 
-}
+' }
 
-ConsoleUI ..> LoginService : uses
 ConsoleUI ..> ProductApplicationService : uses
 ConsoleUI ..> MaterialApplicationService : uses
-MaterialManager <.. MaterialApplicationService : uses
-Product"1" *-- "1..*"Material
-Product"1" *-- "1..*"ProductManager
-ProductManager <.. ProductApplicationService : uses
-Material"1..*" *-- "1" MaterialManager
-LoginService --> AccountManager : uses
-AccountManager "1" *-- "0..*" Account
+ConsoleUI ..> LoginService : uses
+ProductApplicationService ..> MaterialApplicationService
+ProductApplicationService"1" --* "1.." Product : PAS has products
+MaterialApplicationService"1" --* "1.." Material : MAS has materials
 ImpactCalculationStrategy <|-- SimpleSumStrategy : implements
 ImpactCalculationStrategy <|-- WeightedByLifespanStrategy : implements
-ImpactCalculationStrategy <|-- WeightedSumStrategy : implements
-ProductApplicationService ..> ImpactCalculationStrategy : uses
-Material"1..*" o-- "1" RecyclingCategory
-RecyclingGuidance --> RecyclingCategory : uses
+ProductApplicationService ..> ImpactCalculationStrategy
+Product <-- RecyclingGuidance
+LoginService --> Account
+Product"1" *-- "1..*"Material
+
+
+
+' ConsoleUI ..> MaterialApplicationService : uses
+' MaterialManager <.. MaterialApplicationService : uses
+' Product"1" *-- "1..*"ProductManager
+' ProductManager <.. ProductApplicationService : uses
+' Material"1..*" *-- "1" MaterialManager
+' LoginService --> AccountManager : uses
+' AccountManager "1" *-- "0..*" Account
 @enduml
