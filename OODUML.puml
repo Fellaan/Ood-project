@@ -49,14 +49,14 @@ Class Account {
 
 Class Material {
    + String name
-   + RecyclingCategory : Category
+   + RecyclingCategory 
    + int EnvironmentalImpact
 
 }
 
 Class Product {
     + Arraylist : Material[]
-    + String name
+    + String name 
     + int estimatedLifespan
 
 }
@@ -85,7 +85,30 @@ Class RecyclingGuidance  {
     
 }
 }
+rectangle Infrastructure {
 
+interface Repository {
+    + saveToFile()
+    + loadFromFile()
+}
+
+class materialRepository {
+    + saveToFile()
+    + loadFromFile()
+}
+class productRepository {
+    + saveToFile()
+    + loadFromFile()
+}
+class accountRepository{
+    + saveToFile()
+    + loadFromFile()
+}
+class recyclingRepository {
+    + saveToFile()
+    + loadFromFile()
+}
+}
 ' Class AccountManager {
 '     - Arraylist : accounts[]
 '     + addAccount()
@@ -119,6 +142,11 @@ ProductApplicationService ..> ImpactCalculationStrategy
 Product <-- RecyclingGuidance
 LoginService --> Account
 Product"1" *-- "1..*"Material
+Repository <|-- accountRepository : implements
+Repository <|-- materialRepository : implements
+Repository <|-- productRepository : implements
+Repository <|-- recyclingRepository : implements
+
 
 
 
