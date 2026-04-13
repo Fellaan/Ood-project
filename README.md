@@ -69,3 +69,5 @@ accountRepository
 # Motivation:  
 ImpactCalculationStrategy interface was placed in the domain layer because it is/contains business logic.  
 Repository interface was placed in the infrastructure layer beacuse it is only used to save and load files with different repositories. We decided to use an interface beacause if we wanted to expand the program with other saves/loads we can easily implement the interface which is good according to the OCP principle.  
+
+# Dependency direction:  
