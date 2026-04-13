@@ -38,3 +38,34 @@ Change ( Change an object e.g Changing the material of an existing product)
 List / View (Display created products / Materials  / material usage / view detailed list etc… )  
 Delete (A created item/product etc)  
 Calculate ( environmental impact, lifespan, price of product)  
+
+# Class/Layer representation:  
+
+## Domain Layer/Business logic:  
+Account  
+ImpactCalculationStrategy (interface)  
+Material  
+Product  
+RecyclingGuidance  
+WeightedByLifespanStrategy  
+SimpleSumStrategy  
+  
+## Application Layer/Use Cases:  
+ProductApplicationService  
+MaterialApplicationService  
+LoginService  
+  
+## Presentation Layer:  
+ConsoleUi  
+More menus will be added as we go further in project.  
+
+## Infrastructure Layer:  
+Repository (interface)  
+productRepository  
+materialRepository  
+recyclingRepository  
+accountRepository  
+
+# Motivation:  
+ImpactCalculationStrategy interface was placed in the domain layer because it is/contains business logic.  
+Repository interface was placed in the infrastructure layer beacuse it is only used to save and load files with different repositories. We decided to use an interface beacause if we wanted to expand the program with other saves/loads we can easily implement the interface which is good according to the OCP principle.  
