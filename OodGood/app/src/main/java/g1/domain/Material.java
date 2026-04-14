@@ -10,8 +10,12 @@ public class Material {
         this.name = name;
         this.recyclingCategory = recyclingCategory;
         this.environmentalImpact = environmentalImpact;
-        System.out.println("Big bombaclat");
+        System.out.println("Domain Material");
 
+    }
+
+    public String getName(){
+        return name;
     }
 
 }
