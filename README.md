@@ -71,3 +71,13 @@ ImpactCalculationStrategy interface was placed in the domain layer because it is
 Repository interface was placed in the infrastructure layer beacuse it is only used to save and load files with different repositories. We decided to use an interface beacause if we wanted to expand the program with other saves/loads we can easily implement the interface which is good according to the OCP principle.  
 
 # Dependency direction:  
+The dependency direction goes from presentation layer --> application layer --> domain layer where the presentation layer calls the application layer and the application layer calls the domain layer.  
+The application layer works as a "transporter" between presentation and domain.  
+## Presentation layer
+This layer is only a presenter, it takes an input from the user, delegates to the application layer and the presents the returned information as an output to the user.  
+
+## Application layer
+This layer is our use cases and our services, this layer calls our repositories and also calls the domain layer.  
+
+## Domain layer
+This layer is the business logic, it contains no framework imports and is pure java/code.  
