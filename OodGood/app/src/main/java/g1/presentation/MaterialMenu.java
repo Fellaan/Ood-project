@@ -44,6 +44,7 @@ public class MaterialMenu {
     }
 
     public String getChoice(){
+        System.out.print("Enter a choice: ");
         return scanner.nextLine();
     }
 

@@ -15,5 +15,6 @@ public class App {
         MaterialMenu materialmenu = new MaterialMenu(scanner);
         materialmenu.run();
         System.out.println("Returned to Main");
+        scanner.close();
     }
 }
