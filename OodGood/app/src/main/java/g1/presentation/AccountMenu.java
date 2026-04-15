@@ -1,0 +1,50 @@
+package g1.presentation;
+import java.util.Scanner;
+
+
+public class AccountMenu {
+    Scanner scanner;
+    public AccountMenu(Scanner scanner) {
+        this.scanner = scanner;
+    }
+
+  public void run() {
+        String choice;
+
+        printAccountMenu();
+        do {
+            choice = getChoice();
+            switch (choice) {
+                case "1":           //Här skapas ett nytt konto
+                    System.out.println("A new account has been created");
+                    break;
+                case "2":           //Här raderas ett konto
+                    System.out.println("Accont removed");
+                    break;
+                case "q":       //Här avslutas appen
+                case "Q":       //Här avslutas appen
+                    break;
+                default:
+                    System.err.println("Wrong input, pls try again"); //Om man trycker fel får man det här felmeddelandet
+            }
+        } while (!(choice.equals("q") || choice.equals("Q")));        // Antigen q eller Q och huvudvärk 
+    }
+
+    public  String getChoice() {
+        System.out.println("Enter a choice pls: ");
+        return scanner.nextLine();
+    }
+
+    private void printAccountMenu() {
+        String menuText = """
+            ------------------
+            | 1) Create account
+            | 2) Remove account
+            | qQ) Return
+             ----------------""";
+
+        System.out.println(menuText);
+    }
+}
+
+
