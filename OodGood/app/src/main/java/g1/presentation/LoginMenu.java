@@ -4,10 +4,19 @@ import java.util.Scanner;
 
 
 public class LoginMenu {
+
+    
+    Scanner scanner;
     String username = "admin";
     String password = "admin";
     String usr;
     String psw;
+
+    public LoginMenu(Scanner scanner) {
+        this.scanner = scanner;
+    }
+
+    
 
     public void runMenu(){
 
@@ -43,15 +52,11 @@ public class LoginMenu {
 
     }
 
-
-
-
-  public String getChoice(){
-        Scanner scanner = new Scanner(System.in);
-        
-        
+    public String getChoice(){
         return scanner.nextLine();
     }
+
+
 
 
 
