@@ -3,10 +3,10 @@ package g1.presentation;
 import java.util.Scanner;
 
 public class productMenu {
-    private Scanner scanner;
+    Scanner scanner;
 
-    public productMenu() {
-        this.scanner = new Scanner(System.in);
+    public productMenu(Scanner scanner) {
+        this.scanner = scanner;
     }
 
     public void run() {
