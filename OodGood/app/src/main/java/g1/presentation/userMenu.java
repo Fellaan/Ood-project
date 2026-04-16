@@ -5,9 +5,13 @@ import java.util.Scanner;
 public class userMenu {
     
     Scanner scanner;
+    MaterialMenu materialMenu;
+    productMenu productMenu;
 
-    public userMenu(Scanner scanner) {
+    public userMenu(Scanner scanner, MaterialMenu materialMenu, productMenu productMenu) {
         this.scanner = scanner;
+        this.materialMenu = materialMenu;
+        this.productMenu = productMenu;
     }
 
     public void run() {
@@ -20,10 +24,12 @@ public class userMenu {
             switch (choice) {
                 case "1":  // Visar och öppnar produkt menyn
                     System.out.println("Showing product menu...\n" );
+                    productMenu.run();
                     printMenu(); // Får upp menyn igen efter varje val för enklare navigering.
                     break;
                 case "2":   // Visar och öppnar material menyn
                     System.out.println("Showing material menu...\n");
+                    materialMenu.run();
                     printMenu();
                     break;
                 case "9":

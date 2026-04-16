@@ -7,13 +7,18 @@ public class LoginMenu {
 
     
     Scanner scanner;
+    AdminMenu adminMenu;
+    userMenu userMenu;
     String username = "admin";
     String password = "admin";
     String usr;
     String psw;
 
-    public LoginMenu(Scanner scanner) {
+    public LoginMenu(Scanner scanner, AdminMenu adminMenu, userMenu userMenu) {
         this.scanner = scanner;
+        this.adminMenu = adminMenu;
+        this.userMenu = userMenu;
+        
     }
 
     
@@ -44,8 +49,10 @@ public class LoginMenu {
         System.out.println("Nice login bro");
         if (usr.equals("admin")){
             System.out.println("Damn admin is mogging");
+            adminMenu.run();
         }else{
             System.err.println("Lil bro");
+            userMenu.run();
         }
 
 
