@@ -13,6 +13,7 @@ public class MaterialMenu {
         this.mas = mas;
     }
 
+    // Metod för att köra menyn 
     public void run(){
         String choice;
         
@@ -20,6 +21,7 @@ public class MaterialMenu {
             printMaterialMenu();
             choice = getChoice();
 
+            //Menyval kallar på metoder 
             switch (choice) {
                 case "1":
                     System.out.println("Here you can create a Material");
@@ -50,11 +52,13 @@ public class MaterialMenu {
 
     }
 
+    //Hanterar input
     public String getChoice(){
         System.out.print("Enter a choice: ");
         return scanner.nextLine();
     }
 
+    //Menutext
     public void printMaterialMenu(){
         System.out.println("""
                 ---------------- Material Menu ----------------
@@ -67,26 +71,35 @@ public class MaterialMenu {
             );
     }
 
+    //Menyval för att skapa material
     public void createMaterial(){
+        System.out.print("Name of Material: ");
         String name = getChoice();
+        System.out.print("Category of Material: ");
         String recyclingCategory = getChoice();
+        System.out.print("Environmental Impact of Material: ");
         int environmentalImpact = Integer.parseInt(getChoice());
         String message = mas.createMaterial(name, recyclingCategory, environmentalImpact);
         System.out.println(message);
     }
 
+    //Menyval för att ta bort Material
     public void removeMaterial(){
+        System.out.print("Name of Material to remove: ");
         String name = getChoice();
         String message = mas.removeMaterial(name);
         System.out.println(message);
     }
 
+    //Menyval för att lista alla material
     public void listMaterials(){
         String message = mas.listMaterials();
         System.out.println(message);
     }
 
+    //Menyval för att visa information om ett Material
     public void showMaterialInfo(){
+        System.out.print("Name of the Material to display: ");
         String name = getChoice();
         String message = mas.showInfo(name);
         System.out.println(message);
