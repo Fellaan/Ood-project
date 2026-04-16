@@ -3,6 +3,9 @@
  */
 import java.util.Scanner;
 
+import g1.application.AccountService;
+import g1.application.MaterialApplicationService;
+import g1.application.ProductApplicationService;
 import g1.presentation.AccountMenu;
 import g1.presentation.AdminMenu;
 import g1.presentation.LoginMenu;
@@ -20,10 +23,15 @@ public class App {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
+        MaterialApplicationService mas = new MaterialApplicationService(null);
+        ProductApplicationService pas = new ProductApplicationService(null);
+        AccountService Acc = new AccountService(null);
         
-        MaterialMenu materialmenu = new MaterialMenu(scanner);
-        productMenu productMenu = new productMenu(scanner);
-        AccountMenu accountMenu = new AccountMenu(scanner);
+        
+         
+        MaterialMenu materialmenu = new MaterialMenu(scanner, mas);
+        productMenu productMenu = new productMenu(scanner, pas);
+        AccountMenu accountMenu = new AccountMenu(scanner, Acc);
         AdminMenu adminMenu = new AdminMenu(scanner, materialmenu, productMenu, accountMenu);
         userMenu userMenu = new userMenu(scanner, materialmenu, productMenu);
         LoginMenu loginMenu = new LoginMenu(scanner, adminMenu, userMenu);
