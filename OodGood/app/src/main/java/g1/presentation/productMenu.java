@@ -1,71 +1,52 @@
 package g1.presentation;
 
-import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Scanner;
+
+import g1.application.ProductApplicationService;
 
 public class productMenu {
     Scanner scanner;
     ArrayList<String> materials;
+    ProductApplicationService pas;
+    String choice;
+    String name;
+    int amount;
+    int lifespan;
 
-    public productMenu(Scanner scanner) {
+    public productMenu(Scanner scanner, ProductApplicationService pas) {
         this.scanner = scanner;
         this.pas = pas;
     }
 
     public void run() {
-        String choice;
-        String name;
-        int amount;
-        int lifespan;
 
-        printMenu();
+       
 
         do {
+            
+            printMenu();
             choice = getChoice();
             switch (choice) {
                 case "1":  // Skapa ny produkt
-                    System.out.print("Enter product name: " );
-                    name = scanner.nextLine();
-                    while (true) {
-                        try {
-                            System.out.print("How many materials is needed to create product? ");
-                            amount = Integer.parseInt(scanner.nextLine());
-                            break;
-                            
-                        } catch (Exception e) {
-                            // TODO: handle exception
-                            System.err.println("Enter an number please!");
-                        }
-                    }
-                    while (true) {
-                        try {
-                            System.out.print("Enter estimated lifespan of product: ");
-                            lifespan = Integer.parseInt(scanner.nextLine());
-                            break;
-                            
-                        } catch (Exception e) {
-                            // TODO: handle exception
-                            System.err.println("Enter a number please!");
-                        }
-                    }
-                    pas.createProduct(name,materials, lifespan );
-                    printMenu(); // Får upp menyn igen efter varje val för enklare navigering.
+                    createProduct();
+                    
                     break;
                 case "2":   // Ta bort produkt som specifieras
                     pas.removeProduct(name);
-                    printMenu();
+                    
                     break;
                 case "3":   // Skriv ut lista på alla produkter som finns
                     pas.showList();
-                    printMenu();
+                    
                     break;
                 case "4":   // Visar information på en produkt som specifieras
                     pas.getDetails(name);
-                    printMenu();
+                    
                     break;
                 case "5":   // Räknar ut miljö påverkan av produkt som specifieras
                     pas.calcImpact(name);
-                    printMenu();
+                    
                     break;
                 case "6":
                     pas.showGuidance(name);
@@ -102,6 +83,34 @@ public class productMenu {
                  ----------------------------------------------""";
 
         System.out.println(menuText);
+    }
+
+    private void createProduct(){
+             System.out.print("Enter product name: " );
+                    name = scanner.nextLine();
+                    while (true) {
+                        try {
+                            System.out.print("How many materials is needed to create product? ");
+                            amount = Integer.parseInt(scanner.nextLine());
+                            break;
+                            
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                            System.err.println("Enter an number please!");
+                        }
+                    }
+                    while (true) {
+                        try {
+                            System.out.print("Enter estimated lifespan of product: ");
+                            lifespan = Integer.parseInt(scanner.nextLine());
+                            break;
+                            
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                            System.err.println("Enter a number please!");
+                        }
+                    }
+                    pas.createProduct(name,materials, lifespan );
     }
 
 }
