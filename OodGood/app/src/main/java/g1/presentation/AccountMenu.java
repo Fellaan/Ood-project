@@ -30,11 +30,11 @@ public class AccountMenu {
                 default:
                     System.err.println("Wrong input, pls try again"); //Om man trycker fel får man det här felmeddelandet
             }
-        } while (!(choice.equals("q") || choice.equals("Q")));        // Antigen q eller Q och huvudvärk 
+        } while (!(choice.equals("9")));        
     }
 
     public  String getChoice() {
-        System.out.println("Enter menu alternative: ");
+        System.out.println("Enter menu alternataive: ");
         return scanner.nextLine();
     }
 
