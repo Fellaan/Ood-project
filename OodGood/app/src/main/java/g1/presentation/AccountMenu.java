@@ -28,13 +28,13 @@ public class AccountMenu {
                 case "9":       //Här avslutas appen
                     break;
                 default:
-                    System.err.println("Wrong input, pls try again"); //Om man trycker fel får man det här felmeddelandet
+                    System.err.println("Wrong input, please try again"); //Om man trycker fel får man det här felmeddelandet
             }
         } while (!(choice.equals("9")));        
     }
 
     public  String getChoice() {
-        System.out.println("Enter menu alternataive: ");
+        System.out.println("Enter menu choice: ");
         return scanner.nextLine();
     }
 
