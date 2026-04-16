@@ -18,11 +18,14 @@ public class AccountMenu {
                 case "1":           //Här skapas ett nytt konto
                     System.out.println("A new account has been created");
                     break;
+
                 case "2":           //Här raderas ett konto
-                    System.out.println("Accont removed");
+                    System.out.println("Enter username to be deleted: ");
+                    String usernameToDelete = scanner.nextLine();
+                    System.out.println("Account removed: " + usernameToDelete);
                     break;
-                case "q":       //Här avslutas appen
-                case "Q":       //Här avslutas appen
+
+                case "9":       //Här avslutas appen
                     break;
                 default:
                     System.err.println("Wrong input, pls try again"); //Om man trycker fel får man det här felmeddelandet
@@ -31,17 +34,17 @@ public class AccountMenu {
     }
 
     public  String getChoice() {
-        System.out.println("Enter a choice pls: ");
+        System.out.println("Enter menu alternative: ");
         return scanner.nextLine();
     }
 
     private void printAccountMenu() {
-        String menuText = """
-            ------------------
+        String menuText =   """
+            -------------------
             | 1) Create account
             | 2) Remove account
-            | qQ) Return
-             ----------------""";
+            | 9) Return
+            ----------------""";
 
         System.out.println(menuText);
     }
