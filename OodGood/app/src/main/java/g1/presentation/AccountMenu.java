@@ -1,11 +1,15 @@
 package g1.presentation;
 import java.util.Scanner;
 
+import g1.application.AccountService;
+
 
 public class AccountMenu {
     Scanner scanner;
-    public AccountMenu(Scanner scanner) {
+    AccountService acc;
+    public AccountMenu(Scanner scanner, AccountService acc) {
         this.scanner = scanner;
+        this.acc = acc;
     }
 
   public void run() {
