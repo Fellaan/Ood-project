@@ -3,9 +3,15 @@ import java.util.Scanner;
 public class AdminMenu {
 
     Scanner scanner;
+    MaterialMenu materialMenu;
+    productMenu productMenu;
+    AccountMenu accountMenu;
 
-    public AdminMenu(Scanner scanner){
+    public AdminMenu(Scanner scanner, MaterialMenu materialMenu, productMenu productMenu, AccountMenu accountMenu){
         this.scanner = scanner;
+        this.materialMenu = materialMenu;
+        this.productMenu = productMenu;
+        this.accountMenu = accountMenu;
     }
 
 
@@ -18,12 +24,15 @@ public class AdminMenu {
         switch (choice) {
             case "1":
                 System.out.println("Showing product menu");
+                productMenu.run();
                 break;
             case "2": 
                 System.out.println("Showing material menu");
+                materialMenu.run();
                 break;
             case "3":
                 System.out.println("Showing account menu");
+                accountMenu.run();
                 break;
             case "9":
                 System.out.println("Exiting");
