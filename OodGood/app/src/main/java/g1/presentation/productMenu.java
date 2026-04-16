@@ -1,16 +1,22 @@
 package g1.presentation;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class productMenu {
     Scanner scanner;
+    ArrayList<String> materials;
 
     public productMenu(Scanner scanner) {
         this.scanner = scanner;
+        this.pas = pas;
     }
 
     public void run() {
         String choice;
+        String name;
+        int amount;
+        int lifespan;
 
         printMenu();
 
@@ -18,24 +24,51 @@ public class productMenu {
             choice = getChoice();
             switch (choice) {
                 case "1":  // Skapa ny produkt
-                    System.out.println("Creating new product...\n" );
+                    System.out.print("Enter product name: " );
+                    name = scanner.nextLine();
+                    while (true) {
+                        try {
+                            System.out.print("How many materials is needed to create product? ");
+                            amount = Integer.parseInt(scanner.nextLine());
+                            break;
+                            
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                            System.err.println("Enter an number please!");
+                        }
+                    }
+                    while (true) {
+                        try {
+                            System.out.print("Enter estimated lifespan of product: ");
+                            lifespan = Integer.parseInt(scanner.nextLine());
+                            break;
+                            
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                            System.err.println("Enter a number please!");
+                        }
+                    }
+                    pas.createProduct(name,materials, lifespan );
                     printMenu(); // Får upp menyn igen efter varje val för enklare navigering.
                     break;
                 case "2":   // Ta bort produkt som specifieras
-                    System.out.println("Removing product...\n");
+                    pas.removeProduct(name);
                     printMenu();
                     break;
                 case "3":   // Skriv ut lista på alla produkter som finns
-                    System.out.println("Listing all products...\n");
+                    pas.showList();
                     printMenu();
                     break;
                 case "4":   // Visar information på en produkt som specifieras
-                    System.out.println("Showing info of product X: ...\n");
+                    pas.getDetails(name);
                     printMenu();
                     break;
                 case "5":   // Räknar ut miljö påverkan av produkt som specifieras
-                    System.out.println("Calculating impact of product X ...\n");
+                    pas.calcImpact(name);
                     printMenu();
+                    break;
+                case "6":
+                    pas.showGuidance(name);
                     break;
                 case "9":
                     System.out.println("Buh bye!");
@@ -49,8 +82,8 @@ public class productMenu {
     }
 
 
-    private String getChoice() {        //Öppnar ny scanner, det skulle vi lösa på annat sätt?
-        System.out.print("Enter menu alternative: ");
+    private String getChoice() {
+        System.out.print("Enter menu choice: ");
         String input = scanner.nextLine();
         return input;
     }
@@ -58,12 +91,13 @@ public class productMenu {
 
     private void printMenu() {          // Meny layout, idéer på design välkomnas.
         String menuText = """
-                 ---------------- Product Menu ----------------
+                 ----------------- Product Menu -----------------
                 | 1) Create new product
                 | 2) Remove an existing product
                 | 3) List all existing products
                 | 4) Show info of specific product
                 | 5) Calculate environmental impact of a product
+                | 6) Show recycling guidance
                 | 9) Return to Main menu
                  ----------------------------------------------""";
 
