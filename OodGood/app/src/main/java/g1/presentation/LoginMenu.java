@@ -1,12 +1,9 @@
 package g1.presentation;
 
-import java.util.Scanner;
-
-
 public class LoginMenu {
 
     
-    Scanner scanner;
+    InputHandler input;
     AdminMenu adminMenu;
     userMenu userMenu;
     String username = "admin";
@@ -14,8 +11,8 @@ public class LoginMenu {
     String usr;
     String psw;
 
-    public LoginMenu(Scanner scanner, AdminMenu adminMenu, userMenu userMenu) {
-        this.scanner = scanner;
+    public LoginMenu(InputHandler input, AdminMenu adminMenu, userMenu userMenu) {
+        this.input = input;
         this.adminMenu = adminMenu;
         this.userMenu = userMenu;
         
@@ -60,7 +57,7 @@ public class LoginMenu {
     }
 
     public String getChoice(){
-        return scanner.nextLine();
+        return input.inputString();
     }
 
 

@@ -1,12 +1,10 @@
 package g1.presentation;
 
 import java.util.ArrayList;
-import java.util.Scanner;
-
 import g1.application.ProductApplicationService;
 
 public class productMenu {
-    Scanner scanner;
+    InputHandler input;
     ArrayList<String> materials;
     ProductApplicationService pas;
     String choice;
@@ -14,8 +12,8 @@ public class productMenu {
     int amount;
     int lifespan;
 
-    public productMenu(Scanner scanner, ProductApplicationService pas) {
-        this.scanner = scanner;
+    public productMenu(InputHandler input, ProductApplicationService pas) {
+        this.input = input;
         this.pas = pas;
     }
 
@@ -65,8 +63,7 @@ public class productMenu {
 
     private String getChoice() {
         System.out.print("Enter menu choice: ");
-        String input = scanner.nextLine();
-        return input;
+        return input.inputString();
     }
 
 
@@ -87,29 +84,14 @@ public class productMenu {
 
     private void createProduct(){
              System.out.print("Enter product name: " );
-                    name = scanner.nextLine();
-                    while (true) {
-                        try {
-                            System.out.print("How many materials is needed to create product? ");
-                            amount = Integer.parseInt(scanner.nextLine());
-                            break;
-                            
-                        } catch (Exception e) {
-                            // TODO: handle exception
-                            System.err.println("Enter an number please!");
-                        }
-                    }
-                    while (true) {
-                        try {
-                            System.out.print("Enter estimated lifespan of product: ");
-                            lifespan = Integer.parseInt(scanner.nextLine());
-                            break;
-                            
-                        } catch (Exception e) {
-                            // TODO: handle exception
-                            System.err.println("Enter a number please!");
-                        }
-                    }
+                    name = input.inputString();
+                    
+                    System.out.print("How many materials is needed to create product? ");
+                    amount = input.inputInt();
+                    
+                    System.out.print("Enter estimated lifespan of product: ");
+                    lifespan = input.inputInt();
+
                     pas.createProduct(name,materials, lifespan );
     }
 
