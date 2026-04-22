@@ -1,14 +1,13 @@
 package g1.presentation;
-import java.util.Scanner;
 public class AdminMenu {
 
-    Scanner scanner;
+    InputHandler input;
     MaterialMenu materialMenu;
     productMenu productMenu;
     AccountMenu accountMenu;
 
-    public AdminMenu(Scanner scanner, MaterialMenu materialMenu, productMenu productMenu, AccountMenu accountMenu){
-        this.scanner = scanner;
+    public AdminMenu(InputHandler input, MaterialMenu materialMenu, productMenu productMenu, AccountMenu accountMenu){
+        this.input = input;
         this.materialMenu = materialMenu;
         this.productMenu = productMenu;
         this.accountMenu = accountMenu;
@@ -72,7 +71,6 @@ public void printAdminMenu() {
 public String getChoice(){
 
     System.out.print("Enter menu choice: ");
-    return scanner.nextLine();
-
+    return input.inputString();
     }
     }

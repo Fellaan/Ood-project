@@ -12,6 +12,7 @@ import g1.presentation.LoginMenu;
 import g1.presentation.MaterialMenu;
 import g1.presentation.productMenu;
 import g1.presentation.userMenu;
+import g1.presentation.InputHandler;
 
 
 public class App {
@@ -22,6 +23,7 @@ public class App {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        InputHandler input = new InputHandler(scanner);
 
         MaterialApplicationService mas = new MaterialApplicationService(null);
         ProductApplicationService pas = new ProductApplicationService(null);
@@ -29,12 +31,12 @@ public class App {
         
         
          
-        MaterialMenu materialmenu = new MaterialMenu(scanner, mas);
-        productMenu productMenu = new productMenu(scanner, pas);
-        AccountMenu accountMenu = new AccountMenu(scanner, Acc);
-        AdminMenu adminMenu = new AdminMenu(scanner, materialmenu, productMenu, accountMenu);
-        userMenu userMenu = new userMenu(scanner, materialmenu, productMenu);
-        LoginMenu loginMenu = new LoginMenu(scanner, adminMenu, userMenu, Acc);
+        MaterialMenu materialmenu = new MaterialMenu(input, mas);
+        productMenu productMenu = new productMenu(input, pas);
+        AccountMenu accountMenu = new AccountMenu(input, Acc);
+        AdminMenu adminMenu = new AdminMenu(input, materialmenu, productMenu, accountMenu);
+        userMenu userMenu = new userMenu(input, materialmenu, productMenu);
+        LoginMenu loginMenu = new LoginMenu(input, adminMenu, userMenu, Acc);
         loginMenu.runMenu();
 
         scanner.close();

@@ -1,15 +1,14 @@
 package g1.presentation;
 
-import java.util.Scanner;
 import g1.application.MaterialApplicationService;
 
 public class MaterialMenu {
 
-    Scanner scanner;
+    InputHandler input;
     MaterialApplicationService mas;
 
-    public MaterialMenu(Scanner scanner, MaterialApplicationService mas){
-        this.scanner = scanner;
+    public MaterialMenu(InputHandler input, MaterialApplicationService mas){
+        this.input = input;
         this.mas = mas;
     }
 
@@ -39,7 +38,7 @@ public class MaterialMenu {
                     System.out.println("Here you can see Material Info");
                     showMaterialInfo();
                     break;
-                case "5":
+                case "9":
                     System.out.println("Returning to the Main menu");
                     break;
                 default:
@@ -47,15 +46,15 @@ public class MaterialMenu {
                     break;
             }
         }
-        while(!(choice.equals("5")));
+        while(!(choice.equals("9")));
 
 
     }
 
-    //Hanterar input
+    //Hanterar input för menyn
     public String getChoice(){
         System.out.print("Enter a choice: ");
-        return scanner.nextLine();
+        return input.inputString();
     }
 
     //Menutext
@@ -74,11 +73,11 @@ public class MaterialMenu {
     //Menyval för att skapa material
     public void createMaterial(){
         System.out.print("Name of Material: ");
-        String name = getChoice();
+        String name = input.inputString();
         System.out.print("Category of Material: ");
-        String recyclingCategory = getChoice();
+        String recyclingCategory = input.inputString();
         System.out.print("Environmental Impact of Material: ");
-        int environmentalImpact = Integer.parseInt(getChoice());
+        int environmentalImpact = input.inputInt();
         String message = mas.createMaterial(name, recyclingCategory, environmentalImpact);
         System.out.println(message);
     }
@@ -86,7 +85,7 @@ public class MaterialMenu {
     //Menyval för att ta bort Material
     public void removeMaterial(){
         System.out.print("Name of Material to remove: ");
-        String name = getChoice();
+        String name = input.inputString();
         String message = mas.removeMaterial(name);
         System.out.println(message);
     }
@@ -100,7 +99,7 @@ public class MaterialMenu {
     //Menyval för att visa information om ett Material
     public void showMaterialInfo(){
         System.out.print("Name of the Material to display: ");
-        String name = getChoice();
+        String name = input.inputString();
         String message = mas.showInfo(name);
         System.out.println(message);
     }
