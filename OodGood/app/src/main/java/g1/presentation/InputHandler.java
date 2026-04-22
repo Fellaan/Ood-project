@@ -19,7 +19,7 @@ public class InputHandler {
             String input = scanner.nextLine();
             return Integer.parseInt(input);
         } catch (Exception e) {
-            System.err.println("Bad input, try again.");
+            System.err.println("Input needs to be a number, please try again.");
         }
        }
     }
@@ -31,7 +31,7 @@ public class InputHandler {
             String input = scanner.nextLine();
             return Double.parseDouble(input);
         } catch (Exception e) {
-            System.err.println("Bad input, try again.");
+            System.err.println("Inputs need to be a number, please try again.");
         }
        }
     }
