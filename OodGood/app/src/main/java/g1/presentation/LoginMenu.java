@@ -1,20 +1,23 @@
 package g1.presentation;
 
+import g1.application.AccountService;
+
+
 public class LoginMenu {
 
     
     InputHandler input;
     AdminMenu adminMenu;
     userMenu userMenu;
-    String username = "admin";
-    String password = "admin";
     String usr;
     String psw;
+    AccountService acc;
 
-    public LoginMenu(InputHandler input, AdminMenu adminMenu, userMenu userMenu) {
+    public LoginMenu(InputHandler input, AdminMenu adminMenu, userMenu userMenu, AccountService acc) {
         this.input = input;
         this.adminMenu = adminMenu;
         this.userMenu = userMenu;
+        this.acc = acc;
         
     }
 
@@ -28,39 +31,25 @@ public class LoginMenu {
 
         do {
             System.out.print("Username: ");
-            usr = getChoice();
+            usr = input.inputString();
             
             System.out.print("Password: ");
-            psw = getChoice();
+            psw = input.inputString();
             
-
-            if (usr.equals(username) && psw.equals(password) || usr.equals("user") && psw.equals("user") ){
-                correctLogin = true;   
-            }
-
-            else{
-                System.out.println("Login not correct, please try agian");
-            }
-        } while (!correctLogin);
-
-        System.out.println("Nice login bro");
-        if (usr.equals("admin")){
-            System.out.println("Damn admin is mogging");
-            adminMenu.run();
-        }else{
-            System.err.println("Lil bro");
-            userMenu.run();
-        }
+            if(acc.login(usr, psw)){
+                correctLogin = true;
+                if (acc.accessAuth(usr)){
+                    adminMenu.run();
+                } else
+                    userMenu.run();
+    
+            } else
+                System.out.println("Wrong login, please try agian!");
 
 
+    } while (!(correctLogin));}
 
-    }
-
-    public String getChoice(){
-        return input.inputString();
-    }
-
-
+   
 
 
 
