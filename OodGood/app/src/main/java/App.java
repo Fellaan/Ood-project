@@ -34,7 +34,7 @@ public class App {
         AccountMenu accountMenu = new AccountMenu(scanner, Acc);
         AdminMenu adminMenu = new AdminMenu(scanner, materialmenu, productMenu, accountMenu);
         userMenu userMenu = new userMenu(scanner, materialmenu, productMenu);
-        LoginMenu loginMenu = new LoginMenu(scanner, adminMenu, userMenu);
+        LoginMenu loginMenu = new LoginMenu(scanner, adminMenu, userMenu, Acc);
         loginMenu.runMenu();
 
         scanner.close();
