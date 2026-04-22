@@ -38,7 +38,7 @@ public class MaterialMenu {
                     System.out.println("Here you can see Material Info");
                     showMaterialInfo();
                     break;
-                case "5":
+                case "9":
                     System.out.println("Returning to the Main menu");
                     break;
                 default:
