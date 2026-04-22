@@ -1,24 +1,20 @@
 package g1.presentation;
 
-import java.util.Scanner;
-
 import g1.application.AccountService;
 
 
 public class LoginMenu {
 
     
-    Scanner scanner;
+    InputHandler input;
     AdminMenu adminMenu;
     userMenu userMenu;
-    String username = "admin";
-    String password = "admin";
     String usr;
     String psw;
     AccountService acc;
 
-    public LoginMenu(Scanner scanner, AdminMenu adminMenu, userMenu userMenu, AccountService acc) {
-        this.scanner = scanner;
+    public LoginMenu(InputHandler input, AdminMenu adminMenu, userMenu userMenu, AccountService acc) {
+        this.input = input;
         this.adminMenu = adminMenu;
         this.userMenu = userMenu;
         this.acc = acc;
@@ -35,10 +31,10 @@ public class LoginMenu {
 
         do {
             System.out.print("Username: ");
-            usr = getChoice();
+            usr = input.inputString();
             
             System.out.print("Password: ");
-            psw = getChoice();
+            psw = input.inputString();
             
             if(acc.login(usr, psw)){
                 correctLogin = true;
@@ -50,17 +46,10 @@ public class LoginMenu {
             } else
                 System.out.println("Wrong login, please try agian!");
 
-          
-
-
 
     } while (!(correctLogin));}
 
-    public String getChoice(){
-        return scanner.nextLine();
-    }
-
-
+   
 
 
 
