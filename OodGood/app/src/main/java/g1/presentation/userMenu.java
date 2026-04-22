@@ -1,15 +1,13 @@
 package g1.presentation;
 
-import java.util.Scanner;
-
 public class userMenu {
     
-    Scanner scanner;
+    InputHandler input;
     MaterialMenu materialMenu;
     productMenu productMenu;
 
-    public userMenu(Scanner scanner, MaterialMenu materialMenu, productMenu productMenu) {
-        this.scanner = scanner;
+    public userMenu(InputHandler input, MaterialMenu materialMenu, productMenu productMenu) {
+        this.input = input;
         this.materialMenu = materialMenu;
         this.productMenu = productMenu;
     }
@@ -47,8 +45,7 @@ public class userMenu {
 
     private String getChoice() {
         System.out.print("Enter menu alternative: ");
-        String input = scanner.nextLine();
-        return input;
+        return input.inputString();
     }
 
 
