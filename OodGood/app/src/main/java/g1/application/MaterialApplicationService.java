@@ -1,42 +1,78 @@
 package g1.application;
 
+import g1.domain.Material;
+import g1.infrastructure.MaterialRepository;
+
+import java.util.List;
+
 public class MaterialApplicationService {
 
-    Repository materialRepository;
+    private final MaterialRepository materialRepository;
 
 
-public MaterialApplicationService(Repository materialRepository){
+public MaterialApplicationService(MaterialRepository materialRepository){
 
-this.materialRepository = materialRepository;
+    this.materialRepository = materialRepository;
     
 }
 // Method will be finished later
-public String createMaterial(String name, String category, int EnvironmentalImpact){
-    
+public MaterialDto createMaterial(CreateMaterialRequest request){
+    Material material = new Material(
+        request.name(),
+        request.recyclingCategory(),
+        request.environmentalImpact()
+    );
+    materialRepository.add(material); // Sparar materialet i repon
 
-
-    return "Created Material";
+    return new MaterialDto( // Returerar ett record som används av menyn för att kunna använda prints
+        material.getName(),
+        material.getrecyclingCategory(),
+        material.getenvironmentalImpact()
+    );
 }
 
 
 // Method will be finished later
-public String removeMaterial(String name){
+public MaterialDto removeMaterial(String name){
+    Material material = materialRepository.findByName(name);
+        
+    materialRepository.remove(material); // Tar bort materialet i repon
 
-    return "Removed Material";
+    return new MaterialDto( // Returerar record till MaterialMenu
+        material.getName(),
+        material.getrecyclingCategory(),
+        material.getenvironmentalImpact()
+    );
 }
 
 
 
 // Method will be finished later 
-public String listMaterials(){
-
-    return "List of materials";
+public List<MaterialDto> listMaterials(){
+    // Hämtar alla Material‑objekt från lagret och omvandlar dem till en lista av MaterialDto
+    return materialRepository.findAll()
+            // Gör om listan till en stream så att vi kan behandla varje objekt i en pipeline
+            .stream()
+            // Omvandlar varje Material‑objekt till ett MaterialDto‑objekt
+            .map(m -> new MaterialDto(
+                m.getName(),
+                m.getrecyclingCategory(),
+                m.getenvironmentalImpact()
+            ))
+            // Samlar tillbaka resultatet till en vanlig lista
+            .toList();
 
 }
 // Method will be finished later 
-public String showInfo(String name){
+public MaterialDto showInfo(String name){
+    Material material = materialRepository.findByName(name);
 
-    return "Showing info";
+
+    return new MaterialDto(
+        material.getName(),
+        material.getrecyclingCategory(),
+        material.getenvironmentalImpact()
+    );
 }
 
 

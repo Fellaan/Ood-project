@@ -6,6 +6,7 @@ import java.util.Scanner;
 import g1.application.AccountService;
 import g1.application.MaterialApplicationService;
 import g1.application.ProductApplicationService;
+import g1.infrastructure.MaterialRepository;
 import g1.presentation.AccountMenu;
 import g1.presentation.AdminMenu;
 import g1.presentation.LoginMenu;
@@ -25,7 +26,8 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         InputHandler input = new InputHandler(scanner);
 
-        MaterialApplicationService mas = new MaterialApplicationService(null);
+        MaterialRepository repo = new MaterialRepository();
+        MaterialApplicationService mas = new MaterialApplicationService(repo);
         ProductApplicationService pas = new ProductApplicationService(null);
         AccountService Acc = new AccountService(null);
         
