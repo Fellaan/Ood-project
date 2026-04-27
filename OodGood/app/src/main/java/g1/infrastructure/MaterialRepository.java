@@ -1,21 +1,42 @@
 package g1.infrastructure;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import g1.application.Repository;
 import g1.domain.Material;
 
-public class MaterialRepository implements Repository<Material>{
+public class MaterialRepository implements Repository<Material> , Serializable{
     private ArrayList<Material> materials = new ArrayList<>();
 
+    String filename = "materials";
+
     @Override
-    public void save(){
+    public void save() throws IOException {
 
-        // Kod för att spara ner skapat material till en fil
+        try (FileOutputStream fileOut = new FileOutputStream(filename);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            out.writeObject(materials);   // write the entire list
+            out.close();
+            fileOut.close();
     }
+}
+    @SuppressWarnings("unchecked")
+    @Override
+    public void loadFromFile() throws IOException, ClassNotFoundException {
+        File file = new File(filename);
 
-    public void loadFromFile(){
-        // Kod för att hämta data från fil
+        try (FileInputStream fileIn = new FileInputStream(file);
+            ObjectInputStream in = new ObjectInputStream(fileIn)) {
+                materials = (ArrayList<Material>) in.readObject();
+            }
+
 
     }
 
