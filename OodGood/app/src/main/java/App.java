@@ -6,13 +6,14 @@ import java.util.Scanner;
 import g1.application.AccountService;
 import g1.application.MaterialApplicationService;
 import g1.application.ProductApplicationService;
+import g1.infrastructure.AccountRepository;
 import g1.presentation.AccountMenu;
 import g1.presentation.AdminMenu;
+import g1.presentation.InputHandler;
 import g1.presentation.LoginMenu;
 import g1.presentation.MaterialMenu;
 import g1.presentation.productMenu;
 import g1.presentation.userMenu;
-import g1.presentation.InputHandler;
 
 
 public class App {
@@ -25,9 +26,18 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         InputHandler input = new InputHandler(scanner);
 
+        AccountRepository AccountRepo = new AccountRepository();
+
+        try {
+            
+            AccountRepo.loadFromFile();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+
         MaterialApplicationService mas = new MaterialApplicationService(null);
         ProductApplicationService pas = new ProductApplicationService(null);
-        AccountService Acc = new AccountService(null);
+        AccountService Acc = new AccountService(AccountRepo);
         
         
          

@@ -1,7 +1,7 @@
-package g1.infrastructure;
+// package g1.infrastructure;
 
-import g1.application.Repository;
+// import g1.application.Repository;
 
-public class ProductRepository implements Repository {
+// public class ProductRepository implements Repository {
 
-}
+// }

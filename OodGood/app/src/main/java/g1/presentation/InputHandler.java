@@ -1,4 +1,5 @@
 package g1.presentation;
+import java.io.Console;
 import java.util.Scanner;
 
 public class InputHandler {
@@ -11,6 +12,19 @@ public class InputHandler {
     public String inputString(){
         return scanner.nextLine();
     }
+
+    
+    public String inputHidden() {
+    Console console = System.console();
+    if (console != null) {
+        char[] chars = console.readPassword();
+        return new String(chars);
+    }
+
+    // Fallback for IDEs (VS Code, IntelliJ)
+    System.out.print("Enter (hidden not supported here): ");
+    return inputString();
+}
 
     //Metod för att returnera Int, med felhantering
     public int inputInt(){

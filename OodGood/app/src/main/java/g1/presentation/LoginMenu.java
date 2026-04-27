@@ -34,7 +34,7 @@ public class LoginMenu {
             usr = input.inputString();
             
             System.out.print("Password: ");
-            psw = input.inputString();
+            psw = input.inputHidden();
             
             if(acc.login(usr, psw)){
                 correctLogin = true;
