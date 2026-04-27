@@ -75,6 +75,10 @@ public MaterialDto showInfo(String name){
     );
 }
 
+public boolean checkMaterial(String name){
+    return materialRepository.findByName(name) != null;
+}
+
 
 
 }

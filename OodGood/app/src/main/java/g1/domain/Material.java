@@ -1,6 +1,8 @@
 package g1.domain;
 
-public class Material {
+import java.io.Serializable;
+
+public class Material implements Serializable {
 
     String name;
     String recyclingCategory;

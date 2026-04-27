@@ -8,6 +8,7 @@ public class MaterialMenu {
 
     InputHandler input;
     MaterialApplicationService mas;
+    String name;
 
     public MaterialMenu(InputHandler input, MaterialApplicationService mas){
         this.input = input;
@@ -74,12 +75,15 @@ public class MaterialMenu {
 
     //Menyval för att skapa material
     public void createMaterial(){
-        System.out.print("Name of Material: ");
-        String name = input.inputString();
-        System.out.print("Category of Material: ");
-        String recyclingCategory = input.inputString();
-        System.out.print("Environmental Impact of Material: ");
-        int environmentalImpact = input.inputInt();
+        do {
+
+            System.out.print("Name of Material: ");
+            name = input.inputString();
+        } while (mas.checkMaterial(name));
+            System.out.print("Category of Material: ");
+            String recyclingCategory = input.inputString();
+            System.out.print("Environmental Impact of Material: ");
+            int environmentalImpact = input.inputInt();
 
         CreateMaterialRequest request = new CreateMaterialRequest(name, recyclingCategory, environmentalImpact);
         MaterialDto createdMaterial = mas.createMaterial(request);
