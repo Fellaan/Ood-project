@@ -1,18 +1,31 @@
 package g1.domain;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Product {
 
     String name;
-    //Listan kommer innehålla records, inte string.
-    ArrayList<String> materials;
+    String category;
+    HashMap<String, Double> materials;
     int lifespan;
 
-    public Product(String name, ArrayList<String> materials, int lifespan){
+    public Product(String name, HashMap<String, Double> materials, int lifespan, String category){
         this.name = name;
         this.materials = materials;
         this.lifespan = lifespan;
+        this.category = category;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public String getCategory(){
+        return category;
+    }
+    
+    public int getLifespan(){
+        return lifespan;
     }
 
 }
