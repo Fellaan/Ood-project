@@ -15,6 +15,7 @@ public class productMenu {
     String name;
     int amount;
     int lifespan;
+    boolean materialDuplicated = false;
 
     public productMenu(InputHandler input, ProductApplicationService pas) {
         this.input = input;
@@ -119,6 +120,7 @@ public class productMenu {
     }
     //creates a product through a record
     private void createProduct(){
+        materialDuplicated = false;
         System.out.print("Enter product name: " );
         String prodName = input.inputString();
                     
@@ -132,13 +134,14 @@ public class productMenu {
                 for (materialRecord m : materials){
                     if (m.name().equals(name)){
                         System.out.println("You have already added this material.");
-                        break;
+                        materialDuplicated = true;
                     }
-                    else{
+                }
+                
+                if (materialDuplicated = false){
                         materialRecord requestedMaterial = new materialRecord(name, weight);
                         materials.add(requestedMaterial);
                     }
-                }
 
                 System.out.print("More material to add? y/n ");
                 choice = input.inputString();
