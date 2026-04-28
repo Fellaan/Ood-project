@@ -6,6 +6,7 @@ import java.util.Scanner;
 import g1.application.AccountService;
 import g1.application.MaterialApplicationService;
 import g1.application.ProductApplicationService;
+import g1.infrastructure.MaterialRepository;
 import g1.infrastructure.AccountRepository;
 import g1.presentation.AccountMenu;
 import g1.presentation.AdminMenu;
@@ -26,6 +27,8 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         InputHandler input = new InputHandler(scanner);
 
+        MaterialRepository repo = new MaterialRepository();
+        MaterialApplicationService mas = new MaterialApplicationService(repo);
         AccountRepository AccountRepo = new AccountRepository();
 
         try {

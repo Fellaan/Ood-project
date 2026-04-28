@@ -1,11 +1,14 @@
 package g1.presentation;
 
+import g1.application.CreateMaterialRequest;
 import g1.application.MaterialApplicationService;
+import g1.application.MaterialDto;
 
 public class MaterialMenu {
 
     InputHandler input;
     MaterialApplicationService mas;
+    String name;
 
     public MaterialMenu(InputHandler input, MaterialApplicationService mas){
         this.input = input;
@@ -72,36 +75,50 @@ public class MaterialMenu {
 
     //Menyval för att skapa material
     public void createMaterial(){
-        System.out.print("Name of Material: ");
-        String name = input.inputString();
-        System.out.print("Category of Material: ");
-        String recyclingCategory = input.inputString();
-        System.out.print("Environmental Impact of Material: ");
-        int environmentalImpact = input.inputInt();
-        String message = mas.createMaterial(name, recyclingCategory, environmentalImpact);
-        System.out.println(message);
+        do {
+
+            System.out.print("Name of Material: ");
+            name = input.inputString();
+        } while (mas.checkMaterial(name));
+            System.out.print("Category of Material: ");
+            String recyclingCategory = input.inputString();
+            System.out.print("Environmental Impact of Material: ");
+            int environmentalImpact = input.inputInt();
+
+        CreateMaterialRequest request = new CreateMaterialRequest(name, recyclingCategory, environmentalImpact);
+        MaterialDto createdMaterial = mas.createMaterial(request);
+            System.out.println("\nMaterial created:");
+            System.out.println("Name: " + createdMaterial.name());
+            System.out.println("Category: " + createdMaterial.recyclingCategory());
+            System.out.println("Impact: " + createdMaterial.environmentalImpact());
     }
 
     //Menyval för att ta bort Material
     public void removeMaterial(){
         System.out.print("Name of Material to remove: ");
         String name = input.inputString();
-        String message = mas.removeMaterial(name);
-        System.out.println(message);
+
+        System.out.println("\nRemoved material:");
+        mas.removeMaterial(name);
+        
     }
 
     //Menyval för att lista alla material
     public void listMaterials(){
-        String message = mas.listMaterials();
-        System.out.println(message);
+        System.out.println("\nList of materials:");
+        mas.listMaterials();
+        
+        
     }
 
     //Menyval för att visa information om ett Material
     public void showMaterialInfo(){
         System.out.print("Name of the Material to display: ");
         String name = input.inputString();
-        String message = mas.showInfo(name);
-        System.out.println(message);
+
+        System.out.println("\nSpecified material:");
+        mas.showInfo(name);
+        
     }
 
 
