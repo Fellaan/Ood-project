@@ -124,13 +124,21 @@ public class productMenu {
                     
             do {
                 System.out.print("What material do you want? ");
-                String materialName = input.inputString();
+                name = input.inputString();
 
                 System.out.print("How much of this material? ");
                 double weight = input.inputDouble();
 
-                materialRecord requestedMaterial = new materialRecord(materialName, weight);
-                materials.add(requestedMaterial);
+                for (materialRecord m : materials){
+                    if (m.name().equals(name)){
+                        System.out.println("You have already added this material.");
+                        break;
+                    }
+                    else{
+                        materialRecord requestedMaterial = new materialRecord(name, weight);
+                        materials.add(requestedMaterial);
+                    }
+                }
 
                 System.out.print("More material to add? y/n ");
                 choice = input.inputString();
