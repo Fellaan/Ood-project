@@ -8,6 +8,7 @@ import g1.application.MaterialApplicationService;
 import g1.application.ProductApplicationService;
 import g1.infrastructure.MaterialRepository;
 import g1.infrastructure.AccountRepository;
+import g1.infrastructure.ProductRepository;
 import g1.presentation.AccountMenu;
 import g1.presentation.AdminMenu;
 import g1.presentation.InputHandler;
@@ -44,9 +45,16 @@ public class App {
         } catch (Exception e) {
             System.err.println(e);
         }
-
-        ProductApplicationService pas = new ProductApplicationService(null);
         AccountService Acc = new AccountService(AccountRepo);
+
+        ProductRepository productRepo = new ProductRepository();
+        try {
+            productRepo.loadFromFile();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+
+        ProductApplicationService pas = new ProductApplicationService(productRepo);
         
         MaterialMenu materialmenu = new MaterialMenu(input, mas);
         productMenu productMenu = new productMenu(input, pas);
