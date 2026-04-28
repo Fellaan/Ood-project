@@ -17,11 +17,6 @@ public class Account implements Serializable {
 
     }
 
-    
-
-
-
-
     public String getUsername(){
 
         return username;
@@ -36,6 +31,4 @@ public class Account implements Serializable {
 
         return adminAccess;
     }
-
-
 }

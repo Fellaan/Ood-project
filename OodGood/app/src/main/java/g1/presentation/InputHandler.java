@@ -15,13 +15,14 @@ public class InputHandler {
 
     
     public String inputHidden() {
+    // Fungerar endast när man kör programmet som en .jar
     Console console = System.console();
     if (console != null) {
         char[] chars = console.readPassword();
         return new String(chars);
     }
 
-    // Fallback for IDEs (VS Code, IntelliJ)
+    // Om man kör genom gradle så fungerar inte console input, därav finns denna som backup.
     System.out.print("Enter (hidden not supported here): ");
     return inputString();
 }

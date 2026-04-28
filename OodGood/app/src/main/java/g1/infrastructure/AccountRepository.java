@@ -16,11 +16,6 @@ public class AccountRepository implements Repository<Account>, Serializable {
     private ArrayList<Account> accounts;
     String filename = "accounts";
 
-    
-    public AccountRepository(){
-        
-    }
-
     @Override
     public void save() throws IOException{
         
@@ -29,39 +24,26 @@ public class AccountRepository implements Repository<Account>, Serializable {
             out.writeObject(accounts);   // write the entire list
             out.close();
             fileOut.close();
-    }
-
-           
-    
-
-    }
-
+    }}
 
     @SuppressWarnings("unchecked")
     @Override
     public void loadFromFile() throws IOException, ClassNotFoundException {
-    File file = new File(filename);
+        File file = new File(filename);
 
-    if (!file.exists()) {
-        System.out.println("No file found, creating default admin account");
-
-        accounts = new ArrayList<>();
-        accounts.add(new Account("admin", "admin", true));
-
+        if (!file.exists()) {
+            System.out.println("No file found, creating default admin account");
+            accounts = new ArrayList<>();
+            accounts.add(new Account("admin", "admin", true));
         // IMPORTANT: save the newly created admin account list
-        save();
-        return;
-    }
+            save();
+        return;}
 
-    try (FileInputStream fileIn = new FileInputStream(file);
-         ObjectInputStream in = new ObjectInputStream(fileIn)) {
-
-        accounts = (ArrayList<Account>) in.readObject();
-    }
+        try (FileInputStream fileIn = new FileInputStream(file);
+            ObjectInputStream in = new ObjectInputStream(fileIn)) {
+            accounts = (ArrayList<Account>) in.readObject();}
 }
 
-
-    
     @Override
     public Account findByName(String name){
         return accounts.stream()
@@ -71,23 +53,17 @@ public class AccountRepository implements Repository<Account>, Serializable {
                 .orElse(null);
     }
 
-
-
     @Override
     public ArrayList<Account> findAll(){
         return accounts;
     }
 
-
     @Override
     public void add(Account account){
         accounts.add(account);
-    
     }
 
     public void remove(Account account){
         accounts.remove(account);
-
     }
-
 }

@@ -39,8 +39,6 @@ public class App {
         ProductApplicationService pas = new ProductApplicationService(null);
         AccountService Acc = new AccountService(AccountRepo);
         
-        
-         
         MaterialMenu materialmenu = new MaterialMenu(input, mas);
         productMenu productMenu = new productMenu(input, pas);
         AccountMenu accountMenu = new AccountMenu(input, Acc);
