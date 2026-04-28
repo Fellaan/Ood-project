@@ -89,10 +89,10 @@ public class productMenu {
         while(true){
             System.out.print("Enter strategy to use: ");
             int strategyChoice = input.inputInt();
-            if(strategyChoice >= 0 || strategyChoice <= impactStrategies.size()){
-                pas.calcImpact(name, impactStrategies.get(strategyChoice-1));
+            if(strategyChoice < 0 || strategyChoice > impactStrategies.size()){
+                System.out.println("Not a menu choice. ");
             } 
-            else{System.out.println("Not a menu choice. ");}
+            else{pas.calcImpact(name, impactStrategies.get(strategyChoice-1));}
         }
     }
 
@@ -120,16 +120,16 @@ public class productMenu {
     //creates a product through a record
     private void createProduct(){
         System.out.print("Enter product name: " );
-        name = input.inputString();
+        String prodName = input.inputString();
                     
             do {
                 System.out.print("What material do you want? ");
-                name = input.inputString();
+                String materialName = input.inputString();
 
                 System.out.print("How much of this material? ");
-                amount = input.inputInt();
+                double weight = input.inputDouble();
 
-                materialRecord requestedMaterial = new materialRecord(name, amount);
+                materialRecord requestedMaterial = new materialRecord(materialName, weight);
                 materials.add(requestedMaterial);
 
                 System.out.print("More material to add? y/n ");
@@ -143,7 +143,7 @@ public class productMenu {
             System.out.print("Lifespan of product? ");
             int lifespan = input.inputInt();
 
-            productRecord productRequest = new productRecord(name, materials, category, lifespan);
+            productRecord productRequest = new productRecord(prodName, materials, category, lifespan);
             boolean createStatus = pas.createProduct(productRequest);
 
             if(createStatus){
