@@ -1,67 +1,64 @@
 package g1.application;
-import java.util.ArrayList;
 
 import g1.domain.Account;
-
 import g1.infrastructure.AccountRepository;
 
 public class AccountService {
 AccountRepository repo;
 String username;
 String password;
-ArrayList<Account> accounts = new ArrayList<Account>();
-
-
-
+Account account;
 
 
 public AccountService(AccountRepository repo){
     this.repo = repo;
-
-    Account account = new Account("admin", "admin", true);
-
-    accounts.add(account);
-
-    Account account1 = new Account("user", "user", false);
-
-    accounts.add(account1);
-
-
-
-
-
 }
 
 public boolean login(String user, String pass){
 
-
-    for(Account acc : accounts){
-        
-        
-            if (acc.getUsername().equals(user) && acc.getPassword().equals(pass)) {
-                
-                        return true;
-                    }
-            }
-    return false;
+    try {
+        account = repo.findByName(user);
+        return pass.equals(account.getPassword());}
+    catch (Exception e) {
+        return false;}
 }
 
 public boolean accessAuth(String user){
-    for(Account acc : accounts){
-        if (acc.getUsername().equals(user)){
-            return acc.getAccess();
-        }
-    }
-return false;
+
+    account = repo.findByName(user);
+    return account.getAccess();
 }
 
+public boolean checkUsername(String name){
 
-
-
-
-
-
-
-
-
+    return repo.findByName(name) != null;
 }
+
+public void createAccount(AccountRecord rec){
+
+    repo.add(new Account(rec.username(), rec.password(), rec.adminAccess()));
+    try {
+        repo.save();}
+    catch (Exception e) {
+    System.out.println(e);}
+}
+
+public void removeAccount(String user){
+
+    account = repo.findByName(user);
+    repo.remove(account);
+    try {
+        repo.save();}
+    catch (Exception e) {
+        System.out.println(e);
+}}}
+
+
+
+
+
+
+
+
+
+

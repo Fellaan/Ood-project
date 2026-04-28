@@ -1,4 +1,5 @@
 package g1.presentation;
+import java.io.Console;
 import java.util.Scanner;
 
 public class InputHandler {
@@ -11,6 +12,20 @@ public class InputHandler {
     public String inputString(){
         return scanner.nextLine();
     }
+
+    
+    public String inputHidden() {
+    // Fungerar endast när man kör programmet som en .jar
+    Console console = System.console();
+    if (console != null) {
+        char[] chars = console.readPassword();
+        return new String(chars);
+    }
+
+    // Om man kör genom gradle så fungerar inte console input, därav finns denna som backup.
+    System.out.print("Enter (hidden not supported here): ");
+    return inputString();
+}
 
     //Metod för att returnera Int, med felhantering
     public int inputInt(){
