@@ -27,8 +27,15 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         InputHandler input = new InputHandler(scanner);
 
-        MaterialRepository repo = new MaterialRepository();
-        MaterialApplicationService mas = new MaterialApplicationService(repo);
+        MaterialRepository matRepo = new MaterialRepository();
+
+        try {
+            matRepo.loadFromFile();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        
+        MaterialApplicationService mas = new MaterialApplicationService(matRepo);
         AccountRepository AccountRepo = new AccountRepository();
 
         try {
@@ -38,7 +45,6 @@ public class App {
             System.err.println(e);
         }
 
-        MaterialApplicationService mas = new MaterialApplicationService(null);
         ProductApplicationService pas = new ProductApplicationService(null);
         AccountService Acc = new AccountService(AccountRepo);
         
