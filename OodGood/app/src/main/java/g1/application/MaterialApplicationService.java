@@ -23,7 +23,10 @@ public MaterialDto createMaterial(CreateMaterialRequest request){
         request.environmentalImpact()
     );
     materialRepository.add(material); // Sparar materialet i repon
-
+    try {
+        materialRepository.save();}
+    catch (Exception e) {
+    System.out.println(e);}
     return new MaterialDto( // Returerar ett record som används av menyn för att kunna använda prints
         material.getName(),
         material.getrecyclingCategory(),
