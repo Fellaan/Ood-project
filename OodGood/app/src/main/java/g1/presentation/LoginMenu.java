@@ -5,7 +5,6 @@ import g1.application.AccountService;
 
 public class LoginMenu {
 
-    
     InputHandler input;
     AdminMenu adminMenu;
     userMenu userMenu;
@@ -18,23 +17,18 @@ public class LoginMenu {
         this.adminMenu = adminMenu;
         this.userMenu = userMenu;
         this.acc = acc;
-        
     }
-
-    
 
     public void runMenu(){
 
         Boolean correctLogin = false;
-
-        //Allt nedanför ersätts när vi ska skapa vidare med login funktionen
 
         do {
             System.out.print("Username: ");
             usr = input.inputString();
             
             System.out.print("Password: ");
-            psw = input.inputString();
+            psw = input.inputHidden();
             
             if(acc.login(usr, psw)){
                 correctLogin = true;
@@ -44,13 +38,6 @@ public class LoginMenu {
                     userMenu.run();
     
             } else
-                System.out.println("Wrong login, please try agian!");
-
-
-    } while (!(correctLogin));}
-
-   
-
-
-
+                System.out.println("Wrong login, please try agian!");}
+         while (!(correctLogin));}
 }
