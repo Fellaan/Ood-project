@@ -6,12 +6,12 @@ public class Material implements Serializable {
 
     String name;
     String recyclingCategory;
-    int environmentalImpact;
+    double emissionFactor;    // Tidigare "int environmentalImpact";  (kg CO₂e per kg)
 
-    public Material(String name, String recyclingCategory, int environmentalImpact){
+    public Material(String name, String recyclingCategory, double emissionFactor){
         this.name = name;
         this.recyclingCategory = recyclingCategory;
-        this.environmentalImpact = environmentalImpact;
+        this.emissionFactor = emissionFactor;     //(kg CO₂e per kg)
 
     }
 
@@ -19,12 +19,12 @@ public class Material implements Serializable {
         return name;
     }
 
-    public String getrecyclingCategory(){
+    public String getRecyclingCategory(){
         return recyclingCategory;
     }
 
-    public int getenvironmentalImpact(){
-        return environmentalImpact;
+    public double getEmissionFactor(){
+        return emissionFactor;          //Konstanten för utsläpp för respektive ämne
     }
 
 }
