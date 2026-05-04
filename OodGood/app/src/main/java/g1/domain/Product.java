@@ -5,10 +5,10 @@ import java.util.HashMap;
 public class Product {
     String name;
     String category;
-    HashMap<String, Double> materials;
+    HashMap<Material, Double> materials;
     int lifespan;
 
-    public Product(String name, HashMap<String, Double> materials, int lifespan, String category){
+    public Product(String name, HashMap<Material, Double> materials, int lifespan, String category){
         this.name = name;
         this.materials = materials;
         this.lifespan = lifespan;
@@ -25,10 +25,11 @@ public class Product {
     
     public int getLifespan(){
         return lifespan;
+    }
 
-    public HashMap<String, Double> getMaterials(){  //Behövde lägga till detta i Kilogram
-        return materials;                           //från Kias ("Virgin aluminum" 12.0)
+    public HashMap<Material, Double> getMaterials(){ 
+        return materials;                          
     
     }
-    }
 }
+

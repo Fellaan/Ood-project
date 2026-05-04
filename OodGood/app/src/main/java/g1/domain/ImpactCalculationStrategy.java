@@ -1,9 +1,10 @@
 package g1.domain;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface ImpactCalculationStrategy {
 
-    double calculateImpact(ArrayList<MaterialImpactRecord> materials, int lifespan);        //All strategier kmr veta hur man gör beräkningar
-
+    double calculateImpact(HashMap<Material, Double> materials, int lifespan);        //All strategier kmr veta hur man gör beräkningar
+    
+    String getName();
 }

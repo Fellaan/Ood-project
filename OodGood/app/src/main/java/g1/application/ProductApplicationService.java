@@ -21,20 +21,19 @@ public class ProductApplicationService {
     public record materialRecord(String name, double quantity){};
     public record productDTO(String name, String category, int lifespan){};
 
-    private ProductRepository productRepo;
     private MaterialRepository materialRepo;
 
-    HashMap<String, Double> map = new HashMap<>();
+    HashMap<Material, Double> map = new HashMap<>();
     ProductRepository repo;
 
     public ProductApplicationService(ProductRepository productRepo, MaterialRepository materialRepo){
-        this.productRepo = productRepo;
+        this.repo = productRepo;
         this.materialRepo = materialRepo;
     }
 
     public boolean createProduct(productRecord createRequest){
         for (materialRecord m : createRequest.materials()){
-            map.put(m.name(), m.quantity());
+            map.put(materialRepo.findByName(m.name()), m.quantity());
         }
         Product product = new Product(createRequest.name(), map, createRequest.lifespan(), createRequest.category());
         repo.add(product);
@@ -71,27 +70,13 @@ public class ProductApplicationService {
         return new productDTO(p.getName(), p.getCategory(), p.getLifespan());
     }
 
-    public double calcImpact(String productName, String strategyName){
+    public double calcImpact(String productName, String strategyName){ //bara use-cases
 
-        Product product = productRepo.findByName(productName);
-
-        ArrayList<MaterialImpactRecord> impactRecords = new ArrayList<>();
-
-
-        for (String materialName : product.getMaterials().keySet()) {
-            double mass = product.getMaterials().get(materialName);
-            Material material = materialRepo.findByName(materialName);
-            impactRecords.add(new MaterialImpactRecord(mass, material.getEmissionFactor()));
-
-        }
-        ImpactCalculationStrategy strategy;
-        if (strategyName.equals("1"))
-            strategy = new SimpleSumStrategy();
-        else
-            strategy = new WeightedByLifespanStrategy();
-
-        return strategy.calculateImpact(impactRecords, product.getLifespan());
-
+        Product product = repo.findByName(productName);
+        HashMap<Material, Double> materials = product.getMaterials();
+        int lifespan = product.getLifespan();
+        return strategy.calculateImpact(materials, lifespan);
+        
     }
 
     public String showGuidance(String name){

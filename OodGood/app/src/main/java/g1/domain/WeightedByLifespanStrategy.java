@@ -1,18 +1,21 @@
 package g1.domain;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class WeightedByLifespanStrategy implements ImpactCalculationStrategy {
 
-    @override
-    public double calculateImpact(ArrayList<MaterialImpactRecord> materials, int lifespan) {
-        
+   @Override 
+    public double calculateImpact(HashMap<Material, Double> materials, int lifespan){
         double totalImpact = 0;
-        
-        for (materialImpactRecord m : materials) {
-            total += m.mass() * m.emissionFactor();
-        }
 
+        for (HashMap.Entry<Material, Double> m : materials.entrySet()) {            
+           
+            totalImpact += m.getValue() * m.getKey().getEmissionFactor();
+        } 
         return totalImpact / lifespan; //Miljlöpåverkan /livslängden
+    }
+    @Override
+    public String getName(){
+        return "Weighted by Lifespan";
     }
 }

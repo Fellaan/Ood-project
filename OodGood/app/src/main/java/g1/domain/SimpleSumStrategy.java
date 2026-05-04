@@ -1,19 +1,24 @@
 package g1.domain;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+
 
 public class SimpleSumStrategy implements ImpactCalculationStrategy {
 
         
-    @override 
-    public double calculateImpactImpact(ArrayList<MaterialImpactRecord> materials, int lifespan){
+    @Override 
+    public double calculateImpact(HashMap<Material, Double> materials, int lifespan){
         double totalImpact = 0;
 
-        for (MaterialImpactRecord m : materials) {            
+        for (HashMap.Entry<Material, Double> m : materials.entrySet()) {            
            
-            totalImpact += m.mass() * m.emissionFactor();
+            totalImpact += m.getValue() * m.getKey().getEmissionFactor();
         } 
         return totalImpact;
     }
 
+    @Override
+    public String getName(){
+        return "Simple Sum Strategy";
+    }
 }
