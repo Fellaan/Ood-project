@@ -3,6 +3,7 @@ package g1.domain;
 import java.util.HashMap;
 
 public class Product {
+
     String name;
     String category;
     HashMap<String, Double> materials;
@@ -25,10 +26,6 @@ public class Product {
     
     public int getLifespan(){
         return lifespan;
+    }
 
-    public HashMap<String, Double> getMaterials(){  //Behövde lägga till detta i Kilogram
-        return materials;                           //från Kias ("Virgin aluminum" 12.0)
-    
-    }
-    }
 }
