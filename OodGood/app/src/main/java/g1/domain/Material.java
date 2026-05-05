@@ -6,12 +6,12 @@ public class Material implements Serializable {
 
     String name;
     String recyclingCategory;
-    int environmentalImpact;
+    double emissionFactor;
 
-    public Material(String name, String recyclingCategory, int environmentalImpact){
+    public Material(String name, String recyclingCategory, double emissionFactor){
         this.name = name;
         this.recyclingCategory = recyclingCategory;
-        this.environmentalImpact = environmentalImpact;
+        this.emissionFactor = emissionFactor;
 
     }
 
@@ -23,8 +23,8 @@ public class Material implements Serializable {
         return recyclingCategory;
     }
 
-    public int getenvironmentalImpact(){
-        return environmentalImpact;
+    public double getEmissionFactor(){
+        return emissionFactor;
     }
 
 }
