@@ -20,7 +20,7 @@ public MaterialDto createMaterial(CreateMaterialRequest request){
     Material material = new Material(
         request.name(),
         request.recyclingCategory(),
-        request.environmentalImpact()
+        request.emissionFactor()
     );
     materialRepository.add(material); // Sparar materialet i repon
     try {
@@ -29,8 +29,8 @@ public MaterialDto createMaterial(CreateMaterialRequest request){
     System.out.println(e);}
     return new MaterialDto( // Returerar ett record som används av menyn för att kunna använda prints
         material.getName(),
-        material.getrecyclingCategory(),
-        material.getenvironmentalImpact()
+        material.getRecyclingCategory(),
+        material.getEmissionFactor()
     );
 }
 
@@ -43,8 +43,8 @@ public MaterialDto removeMaterial(String name){
 
     return new MaterialDto( // Returerar record till MaterialMenu
         material.getName(),
-        material.getrecyclingCategory(),
-        material.getenvironmentalImpact()
+        material.getRecyclingCategory(),
+        material.getEmissionFactor()
     );
 }
 
@@ -59,8 +59,8 @@ public List<MaterialDto> listMaterials(){
             // Omvandlar varje Material‑objekt till ett MaterialDto‑objekt
             .map(m -> new MaterialDto(
                 m.getName(),
-                m.getrecyclingCategory(),
-                m.getenvironmentalImpact()
+                m.getRecyclingCategory(),
+                m.getEmissionFactor()
             ))
             // Samlar tillbaka resultatet till en vanlig lista
             .toList();
@@ -73,8 +73,8 @@ public MaterialDto showInfo(String name){
 
     return new MaterialDto(
         material.getName(),
-        material.getrecyclingCategory(),
-        material.getenvironmentalImpact()
+        material.getRecyclingCategory(),
+        material.getEmissionFactor()
     );
 }
 

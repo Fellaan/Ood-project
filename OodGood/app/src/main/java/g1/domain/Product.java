@@ -6,10 +6,10 @@ public class Product {
 
     String name;
     String category;
-    HashMap<String, Double> materials;
+    HashMap<Material, Double> materials;
     int lifespan;
 
-    public Product(String name, HashMap<String, Double> materials, int lifespan, String category){
+    public Product(String name, HashMap<Material, Double> materials, int lifespan, String category){
         this.name = name;
         this.materials = materials;
         this.lifespan = lifespan;
@@ -28,4 +28,9 @@ public class Product {
         return lifespan;
     }
 
+    public HashMap<Material, Double> getMaterials(){ 
+        return materials;                          
+    
+    }
 }
+

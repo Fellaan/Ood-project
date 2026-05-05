@@ -12,16 +12,19 @@ public class ProductApplicationService {
     public record materialRecord(String name, double quantity){};
     public record productDTO(String name, String category, int lifespan){};
 
-    HashMap<String, Double> map = new HashMap<>();
+    private MaterialRepository materialRepo;
+
+    HashMap<Material, Double> map = new HashMap<>();
     ProductRepository repo;
 
-    public ProductApplicationService(ProductRepository repo){
-        this.repo = repo;
+    public ProductApplicationService(ProductRepository productRepo, MaterialRepository materialRepo){
+        this.repo = productRepo;
+        this.materialRepo = materialRepo;
     }
 
     public boolean createProduct(productRecord createRequest){
         for (materialRecord m : createRequest.materials()){
-            map.put(m.name(), m.quantity());
+            map.put(materialRepo.findByName(m.name()), m.quantity());
         }
         Product product = new Product(createRequest.name(), map, createRequest.lifespan(), createRequest.category());
         repo.add(product);
@@ -58,9 +61,13 @@ public class ProductApplicationService {
         return new productDTO(p.getName(), p.getCategory(), p.getLifespan());
     }
 
-    // Metoder nedan behöver implementeras, har med guidance och impact strategies att göra.
-    public String calcImpact(String name, String strategyName){
-        return "";
+    public double calcImpact(String productName, String strategyName){ //bara use-cases
+
+        Product product = repo.findByName(productName);
+        HashMap<Material, Double> materials = product.getMaterials();
+        int lifespan = product.getLifespan();
+        return strategy.calculateImpact(materials, lifespan);
+        
     }
 
     public String showGuidance(String name){
