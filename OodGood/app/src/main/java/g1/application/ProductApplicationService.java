@@ -1,6 +1,7 @@
 package g1.application;
 
 import java.util.HashMap;
+import java.io.IOException;
 import java.util.ArrayList;
 import g1.domain.Product;
 import g1.domain.Material;
@@ -23,7 +24,7 @@ public class ProductApplicationService {
         this.materialRepo = materialRepo;
     }
 
-    public boolean createProduct(productRecord createRequest){
+    public boolean createProduct(productRecord createRequest) throws SaveErrorException, IOException{
         for (materialRecord m : createRequest.materials()){
             map.put(materialRepo.findByName(m.name()), m.quantity());
         }
@@ -32,19 +33,24 @@ public class ProductApplicationService {
 
         try {
             prodRepo.save();
-        } catch (Exception e) {
+        } catch (SaveErrorException e) {
             return false;
         }
         return true;
     }
 
-    public String removeProduct(String name){
+    public String removeProduct(String name) throws IOException, SaveErrorException{
         Product p = prodRepo.findByName(name);
         if (p.equals(null)){
             return "Cannot be removed, product does not exist";
         }
         else{
             prodRepo.remove(p);
+            try {
+                prodRepo.save();
+            } catch (SaveErrorException e) {
+                throw e;
+            }
             return "Product removed successfully";
         }
     }

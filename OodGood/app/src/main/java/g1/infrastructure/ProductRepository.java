@@ -9,27 +9,32 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
+import g1.application.LoadErrorException;
 import g1.application.Repository;
+import g1.application.SaveErrorException;
 import g1.domain.Product;
 
 public class ProductRepository implements Repository<Product>, Serializable {
     private ArrayList<Product> products = new ArrayList<>();
 
     String filename = "products";
+    
+    @Override
+    public void save() throws IOException, SaveErrorException {
 
-    public void save() throws IOException{
         try (FileOutputStream fileOut = new FileOutputStream(filename);
             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
             out.writeObject(products);   // write the entire list
             out.close();
             fileOut.close();
+    } catch (IOException e) {
+        throw new SaveErrorException("Failed to save to file.");
     }
 }
 
     @SuppressWarnings("unchecked")
     @Override
-    public void loadFromFile() throws IOException, ClassNotFoundException{
+    public void loadFromFile() throws IOException, ClassNotFoundException, LoadErrorException, SaveErrorException {
         File file = new File(filename);
 
         try (FileInputStream fileIn = new FileInputStream(file);
