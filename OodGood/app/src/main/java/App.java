@@ -54,7 +54,7 @@ public class App {
             System.err.println(e);
         }
 
-        ProductApplicationService pas = new ProductApplicationService(productRepo);
+        ProductApplicationService pas = new ProductApplicationService(productRepo, matRepo);
         
         MaterialMenu materialmenu = new MaterialMenu(input, mas);
         productMenu productMenu = new productMenu(input, pas);

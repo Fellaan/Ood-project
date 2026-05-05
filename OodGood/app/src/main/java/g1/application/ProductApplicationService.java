@@ -3,7 +3,9 @@ package g1.application;
 import java.util.HashMap;
 import java.util.ArrayList;
 import g1.domain.Product;
+import g1.domain.Material;
 import g1.infrastructure.ProductRepository;
+import g1.infrastructure.MaterialRepository;
 
 
 public class ProductApplicationService {
@@ -12,13 +14,12 @@ public class ProductApplicationService {
     public record materialRecord(String name, double quantity){};
     public record productDTO(String name, String category, int lifespan){};
 
+    private HashMap<Material, Double> map = new HashMap<>();
+    private ProductRepository prodRepo;
     private MaterialRepository materialRepo;
 
-    HashMap<Material, Double> map = new HashMap<>();
-    ProductRepository repo;
-
     public ProductApplicationService(ProductRepository productRepo, MaterialRepository materialRepo){
-        this.repo = productRepo;
+        this.prodRepo = productRepo;
         this.materialRepo = materialRepo;
     }
 
@@ -27,10 +28,10 @@ public class ProductApplicationService {
             map.put(materialRepo.findByName(m.name()), m.quantity());
         }
         Product product = new Product(createRequest.name(), map, createRequest.lifespan(), createRequest.category());
-        repo.add(product);
+        prodRepo.add(product);
 
         try {
-            repo.save();
+            prodRepo.save();
         } catch (Exception e) {
             return false;
         }
@@ -38,32 +39,32 @@ public class ProductApplicationService {
     }
 
     public String removeProduct(String name){
-        Product p = repo.findByName(name);
+        Product p = prodRepo.findByName(name);
         if (p.equals(null)){
             return "Cannot be removed, product does not exist";
         }
         else{
-            repo.remove(p);
+            prodRepo.remove(p);
             return "Product removed successfully";
         }
     }
 
     public ArrayList<String> showList(){
         ArrayList<String> nameList = new ArrayList<>();
-        for (String name : repo.listAll()){
+        for (String name : prodRepo.listAll()){
             nameList.add(name);
         }
         return nameList;
     }
 
     public productDTO getDetails(String name){
-        Product p = repo.findByName(name);
+        Product p = prodRepo.findByName(name);
         return new productDTO(p.getName(), p.getCategory(), p.getLifespan());
     }
 
     public double calcImpact(String productName, String strategyName){ //bara use-cases
 
-        Product product = repo.findByName(productName);
+        Product product = prodRepo.findByName(productName);
         HashMap<Material, Double> materials = product.getMaterials();
         int lifespan = product.getLifespan();
         return strategy.calculateImpact(materials, lifespan);
