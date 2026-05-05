@@ -2,17 +2,8 @@ package g1.application;
 
 import java.util.HashMap;
 import java.util.ArrayList;
-
 import g1.domain.Product;
-import g1.domain.Material;
-import g1.domain.ImpactCalculationStrategy;
-import g1.domain.SimpleSumStrategy;
-import g1.domain.WeightedByLifespanStrategy;
-import g1.domain.MaterialImpactRecord;
-
 import g1.infrastructure.ProductRepository;
-import g1.infrastructure.MaterialRepository;
-
 
 
 public class ProductApplicationService {

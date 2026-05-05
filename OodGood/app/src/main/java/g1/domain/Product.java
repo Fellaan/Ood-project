@@ -3,6 +3,7 @@ package g1.domain;
 import java.util.HashMap;
 
 public class Product {
+
     String name;
     String category;
     HashMap<Material, Double> materials;
