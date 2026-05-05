@@ -43,6 +43,8 @@ public class App {
             System.err.println("Class error: " + e.getMessage());
         } catch (SaveErrorException e){
             System.err.println("Save error: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
         }
         
         MaterialApplicationService mas = new MaterialApplicationService(matRepo);
@@ -58,6 +60,8 @@ public class App {
             System.err.println("Class error: " + e.getMessage());
         } catch (SaveErrorException e) {
             System.err.println("Save error: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
         }
 
         AccountService Acc = new AccountService(AccountRepo);
@@ -74,6 +78,8 @@ public class App {
             System.err.println("Class error: " + e.getMessage());
         } catch (SaveErrorException e) {
             System.err.println("Save error: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
         }
 
         ProductApplicationService pas = new ProductApplicationService(productRepo, matRepo);

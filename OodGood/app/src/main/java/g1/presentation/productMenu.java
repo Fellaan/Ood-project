@@ -167,6 +167,8 @@ public class productMenu {
             System.err.println("Save error: " + e.getMessage());
         } catch (IOException e) {
             System.err.println("File error: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
         }
         }
 
@@ -179,6 +181,8 @@ public class productMenu {
             System.err.println("Save error: " + e.getMessage());
         } catch (IOException e) {
             System.err.println("File error: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
         }
     }
     //display guidance

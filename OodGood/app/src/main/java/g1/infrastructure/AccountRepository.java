@@ -47,7 +47,10 @@ public class AccountRepository implements Repository<Account>, Serializable {
 
         try (FileInputStream fileIn = new FileInputStream(file);
             ObjectInputStream in = new ObjectInputStream(fileIn)) {
-            accounts = (ArrayList<Account>) in.readObject();}
+            accounts = (ArrayList<Account>) in.readObject();
+        } catch (IOException e) {
+            throw new LoadErrorException("Failed to load from file.");
+        }
 }
 
     @Override

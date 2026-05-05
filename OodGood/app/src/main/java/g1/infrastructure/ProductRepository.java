@@ -40,6 +40,8 @@ public class ProductRepository implements Repository<Product>, Serializable {
         try (FileInputStream fileIn = new FileInputStream(file);
             ObjectInputStream in = new ObjectInputStream(fileIn)) {
                 products = (ArrayList<Product>) in.readObject();
+            } catch (IOException e) {
+                throw new LoadErrorException("Failed to load from file.");
             }
     }
 
