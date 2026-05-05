@@ -3,6 +3,8 @@ package g1.application;
 import java.util.HashMap;
 import java.util.ArrayList;
 import g1.domain.Product;
+import g1.domain.ImpactCalculationStrategy;
+import g1.domain.ImpactStrategyFactory;
 import g1.domain.Material;
 import g1.infrastructure.ProductRepository;
 import g1.infrastructure.MaterialRepository;
@@ -17,10 +19,12 @@ public class ProductApplicationService {
     private HashMap<Material, Double> map = new HashMap<>();
     private ProductRepository prodRepo;
     private MaterialRepository materialRepo;
+    private ImpactStrategyFactory impactStrategyFactory;
 
-    public ProductApplicationService(ProductRepository productRepo, MaterialRepository materialRepo){
+    public ProductApplicationService(ProductRepository productRepo, MaterialRepository materialRepo, ImpactStrategyFactory impactStrategyFactory){
         this.prodRepo = productRepo;
         this.materialRepo = materialRepo;
+        this.impactStrategyFactory = impactStrategyFactory;
     }
 
     public boolean createProduct(productRecord createRequest){
@@ -49,6 +53,16 @@ public class ProductApplicationService {
         }
     }
 
+    public boolean productExists(String name){
+        Product p = prodRepo.findByName(name);
+        if (p.equals(null)){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
     public ArrayList<String> showList(){
         ArrayList<String> nameList = new ArrayList<>();
         for (String name : prodRepo.listAll()){
@@ -65,10 +79,19 @@ public class ProductApplicationService {
     public double calcImpact(String productName, String strategyName){ //bara use-cases
 
         Product product = prodRepo.findByName(productName);
+        ImpactCalculationStrategy strategy = impactStrategyFactory.findByName(strategyName);
         HashMap<Material, Double> materials = product.getMaterials();
         int lifespan = product.getLifespan();
         return strategy.calculateImpact(materials, lifespan);
         
+    }
+
+    public ArrayList<String> loadImpactStrategies(){
+        ArrayList<String> strategyList = new ArrayList<>();
+        for (ImpactCalculationStrategy i : impactStrategyFactory.getStrategies()){
+            strategyList.add(i.getName());
+        }
+        return strategyList;
     }
 
     public String showGuidance(String name){
@@ -76,9 +99,7 @@ public class ProductApplicationService {
         return "Guidance";
     }
 
-    public ArrayList<String> loadImpactStrategies(){
-        return null;
-    }
+    
 
 
 
