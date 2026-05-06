@@ -95,7 +95,7 @@ public class productMenu {
         while(true){
             System.out.print("Enter strategy to use: ");
             int strategyChoice = input.inputInt();
-            if(strategyChoice < 0 || strategyChoice > impactStrategies.size()){
+            if(strategyChoice < 1 || strategyChoice > impactStrategies.size()){
                 System.out.println("Not a menu choice. ");
             } 
             else{double impactValue = pas.calcImpact(name, impactStrategies.get(strategyChoice-1));
