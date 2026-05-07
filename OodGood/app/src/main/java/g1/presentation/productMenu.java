@@ -50,7 +50,12 @@ public class productMenu {
                 case "5":  //factory strategy will be implemented here
                     System.out.print("Name of product?: ");
                     name = input.inputString();
-                    calcImpact(name);
+                    if (pas.productExists(name)){
+                        calcImpact(name);
+                    }
+                    else{
+                        System.out.println("That product does not exist.");
+                    }
                     break;
                 case "6":
                     System.out.print("For what Product?: ");
@@ -92,10 +97,13 @@ public class productMenu {
         while(true){
             System.out.print("Enter strategy to use: ");
             int strategyChoice = input.inputInt();
-            if(strategyChoice < 0 || strategyChoice > impactStrategies.size()){
+            if(strategyChoice < 1 || strategyChoice > impactStrategies.size()){
                 System.out.println("Not a menu choice. ");
             } 
-            else{pas.calcImpact(name, impactStrategies.get(strategyChoice-1));}
+            else{double impactValue = pas.calcImpact(name, impactStrategies.get(strategyChoice-1));
+                System.out.println(ProductOutputFormatter.displayImpact(impactValue));
+                break;
+            }
         }
     }
 

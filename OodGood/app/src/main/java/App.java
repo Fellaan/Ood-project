@@ -9,6 +9,7 @@ import g1.application.LoadErrorException;
 import g1.application.MaterialApplicationService;
 import g1.application.ProductApplicationService;
 import g1.application.SaveErrorException;
+import g1.domain.ImpactStrategyFactory;
 import g1.infrastructure.MaterialRepository;
 import g1.infrastructure.AccountRepository;
 import g1.infrastructure.ProductRepository;
@@ -82,7 +83,8 @@ public class App {
             System.err.println("Unexpected error: " + e.getMessage());
         }
 
-        ProductApplicationService pas = new ProductApplicationService(productRepo, matRepo);
+        ImpactStrategyFactory impactStrategyFactory = new ImpactStrategyFactory();
+        ProductApplicationService pas = new ProductApplicationService(productRepo, matRepo, impactStrategyFactory);
         
         MaterialMenu materialmenu = new MaterialMenu(input, mas);
         productMenu productMenu = new productMenu(input, pas);
