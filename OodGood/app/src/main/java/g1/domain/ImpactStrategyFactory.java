@@ -7,6 +7,7 @@ public class ImpactStrategyFactory {
     ArrayList<ImpactCalculationStrategy> strategies;
 
     public ImpactStrategyFactory(){
+        strategies = new ArrayList<ImpactCalculationStrategy>();
         strategies.add(new SimpleSumStrategy());
         strategies.add(new WeightedByLifespanStrategy());
     }

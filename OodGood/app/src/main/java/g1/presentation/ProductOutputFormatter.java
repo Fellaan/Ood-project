@@ -1,6 +1,5 @@
 package g1.presentation;
 
-import g1.application.ProductApplicationService;
 import g1.application.ProductApplicationService.productDTO;
 
 public class ProductOutputFormatter {

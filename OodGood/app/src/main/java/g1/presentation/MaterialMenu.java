@@ -5,7 +5,6 @@ import java.io.IOException;
 import g1.application.CreateMaterialRequest;
 import g1.application.MaterialApplicationService;
 import g1.application.MaterialDto;
-import java.util.List;
 import g1.application.SaveErrorException;
 
 public class MaterialMenu {
@@ -94,7 +93,7 @@ public class MaterialMenu {
         try {
             MaterialDto createdMaterial = mas.createMaterial(request);
             System.out.println("\nMaterial created:");
-            System.out.println(MaterialOutputFormatter.materialDto(createdMaterial)      
+            System.out.println(MaterialOutputFormatter.materialDto(createdMaterial));      
         } catch (SaveErrorException e) {
             System.err.println("Save error: " + e.getMessage());
         } catch (IOException e) {
