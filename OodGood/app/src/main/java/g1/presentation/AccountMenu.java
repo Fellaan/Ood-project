@@ -36,7 +36,7 @@ public class AccountMenu {
                     removeAccount();
                     break;
 
-                case "9":       //Här avslutas appen
+                case "9":       //Går tillbaka till huvudmenyn
                     break;
 
                 default:
@@ -65,15 +65,25 @@ public class AccountMenu {
         passwordAccepted = true;
 
         do{
+            System.out.println("Press 9 to return to menu");
             System.out.print("Username: ");
             username = input.inputString();
+            if (username.equals("9")){
+                return;}
+
         } while (acc.checkUsername(username));
 
         do{
+            System.out.println("Press 9 to return to menu");
             System.out.print("Password: ");
             password = input.inputString();
+            
+            if (password.equals("9")) {
+                return;
+            }
             if (password.length() >= 8){
                 passwordAccepted = false;
+
             } else{
                 System.out.println("Password needs to be minumum 8 characters long! Please try agian.");}
         }while (passwordAccepted);
@@ -99,11 +109,12 @@ public class AccountMenu {
 
     public void removeAccount(){
         do{
-            System.out.print("Account to remove:    (Press 9 to return to menu)");
+            System.out.println("Press 9 to return to menu");
+            System.out.print("Account to remove: ");
             username = input.inputString();
             if (username.equals("9")){
                 break;}
-        } while (!(!acc.checkUsername(username) && username.equals("admin")));
+        } while (!acc.checkUsername(username) || username.equals("admin"));
         try {
             acc.removeAccount(username);
     } catch (SaveErrorException e) {
