@@ -1,7 +1,9 @@
 package g1.presentation;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import g1.application.ProductApplicationService;
+import g1.application.SaveErrorException;
 import g1.application.ProductApplicationService.productRecord;
 import g1.application.ProductApplicationService.productDTO;
 import g1.application.ProductApplicationService.materialRecord;
@@ -163,17 +165,33 @@ public class productMenu {
             int lifespan = input.inputInt();
 
             productRecord productRequest = new productRecord(prodName, materials, category, lifespan);
+            try {
             boolean createStatus = pas.createProduct(productRequest);
 
             if(createStatus){
                 System.out.println("Product successfully created");
             } else{System.out.println("Error in creation");}
+        } catch (SaveErrorException e) {
+            System.err.println("Save error: " + e.getMessage());
+        } catch (IOException e) {
+            System.err.println("File error: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
+        }
         }
 
     //remove a product
     private void removeProduct(String name){
-        String message = pas.removeProduct(name);
-        System.out.println(message);
+        try {
+            String message = pas.removeProduct(name);
+            System.out.println(message);
+        } catch (SaveErrorException e) {
+            System.err.println("Save error: " + e.getMessage());
+        } catch (IOException e) {
+            System.err.println("File error: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
+        }
     }
     //display guidance
     private void showGuidance(String name){

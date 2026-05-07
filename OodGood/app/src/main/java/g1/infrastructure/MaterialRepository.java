@@ -9,7 +9,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import g1.application.LoadErrorException;
 import g1.application.Repository;
+import g1.application.SaveErrorException;
 import g1.domain.Material;
 
 public class MaterialRepository implements Repository<Material> , Serializable{
@@ -18,24 +20,28 @@ public class MaterialRepository implements Repository<Material> , Serializable{
     String filename = "materials";
 
     @Override
-    public void save() throws IOException {
+    public void save() throws IOException, SaveErrorException {
 
         try (FileOutputStream fileOut = new FileOutputStream(filename);
             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
             out.writeObject(materials);   // write the entire list
             out.close();
             fileOut.close();
+    } catch (IOException e) {
+        throw new SaveErrorException("Failed to save to file.");
     }
 }
     @SuppressWarnings("unchecked")
     @Override
-    public void loadFromFile() throws IOException, ClassNotFoundException {
+    public void loadFromFile() throws IOException, ClassNotFoundException, LoadErrorException, SaveErrorException {
         File file = new File(filename);
 
         try (FileInputStream fileIn = new FileInputStream(file);
             ObjectInputStream in = new ObjectInputStream(fileIn)) {
                 materials = (ArrayList<Material>) in.readObject();
-            }
+    } catch (IOException e) {
+        throw new LoadErrorException("Failed to load from file");
+    } 
 
 
     }
