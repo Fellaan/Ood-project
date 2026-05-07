@@ -30,19 +30,15 @@ public class MaterialMenu {
             //Menyval kallar på metoder 
             switch (choice) {
                 case "1":
-                    System.out.println("Here you can create a Material");
                     createMaterial();
                     break;
                 case "2":
-                    System.out.println("Here you can remove a Material");
                     removeMaterial();
                     break;
                 case "3":
-                    System.out.println("Here you can list Materials");
                     listMaterials();
                     break;
                 case "4":
-                    System.out.println("Here you can see Material Info");
                     showMaterialInfo();
                     break;
                 case "9":
@@ -124,9 +120,11 @@ public class MaterialMenu {
 
     //list all materials
     private void listMaterials(){
+        System.out.println("List of materials:\n------------------");
         for (MaterialDto mat: mas.listMaterials()){
             System.out.println(MaterialOutputFormatter.displayMaterial(mat));
         }
+        System.out.println("\n------------------\n");
     }
 
     //Menyval för att visa information om ett Material
@@ -134,8 +132,12 @@ public class MaterialMenu {
         System.out.print("Name of the Material to display: ");
         String name = input.inputString();
 
-        System.out.println("\nSpecified material:");
-        System.out.println(MaterialOutputFormatter.materialDto(mas.showInfo(name)));
+        if(mas.checkMaterial(name)){
+            System.out.println("\nSpecified material:");
+            System.out.println(MaterialOutputFormatter.materialDto(mas.showInfo(name)));
+        } else { 
+            System.out.println("Material does not exist.\n");
+        }
         
     }
 

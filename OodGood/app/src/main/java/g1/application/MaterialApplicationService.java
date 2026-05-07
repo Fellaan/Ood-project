@@ -77,18 +77,19 @@ public List<MaterialDto> listMaterials(){
 public MaterialDto showInfo(String name){
     Material material = materialRepository.findByName(name);
 
-
+    try {
     return new MaterialDto(
         material.getName(),
         material.getRecyclingCategory(),
         material.getEmissionFactor()
     );
+} catch (NullPointerException e) {
+    throw e;
+}
 }
 
 public boolean checkMaterial(String name){
     return materialRepository.findByName(name) != null;
 }
-
-
 
 }
