@@ -1,6 +1,9 @@
 package g1.presentation;
+import java.io.IOException;
+
 import g1.application.AccountRecord;
 import g1.application.AccountService;
+import g1.application.SaveErrorException;
 
 
 
@@ -83,7 +86,15 @@ public class AccountMenu {
         } while (!(access.toLowerCase().equals("admin") || access.toLowerCase().equals("user")));
 
         boolAccess = access.equals("admin");
-        acc.createAccount(new AccountRecord(username, password, boolAccess));
+        try {
+            acc.createAccount(new AccountRecord(username, password, boolAccess));
+        } catch (SaveErrorException e) {
+            System.err.println("Save error: " + e.getMessage());
+        } catch (IOException e) {
+            System.err.println("File error: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
+        }
     }
 
     public void removeAccount(){
@@ -93,8 +104,16 @@ public class AccountMenu {
             if (username.equals("9")){
                 break;}
         } while (!(!acc.checkUsername(username) && username.equals("admin")));
-
-        acc.removeAccount(username);}
+        try {
+            acc.removeAccount(username);
+    } catch (SaveErrorException e) {
+        System.err.println("Save error: " + e.getMessage());
+    } catch (IOException e) {
+        System.err.println("File error: " + e.getMessage());
+    } catch (Exception e) {
+        System.err.println("Unexpected error: " + e.getMessage());
+    }
+}
 }
 
 

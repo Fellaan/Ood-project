@@ -1,7 +1,9 @@
 package g1.presentation;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import g1.application.ProductApplicationService;
+import g1.application.SaveErrorException;
 import g1.application.ProductApplicationService.productRecord;
 import g1.application.ProductApplicationService.productDTO;
 import g1.application.ProductApplicationService.materialRecord;
@@ -48,7 +50,12 @@ public class productMenu {
                 case "5":  //factory strategy will be implemented here
                     System.out.print("Name of product?: ");
                     name = input.inputString();
-                    calcImpact(name);
+                    if (pas.productExists(name)){
+                        calcImpact(name);
+                    }
+                    else{
+                        System.out.println("That product does not exist.");
+                    }
                     break;
                 case "6":
                     System.out.print("For what Product?: ");
@@ -90,10 +97,13 @@ public class productMenu {
         while(true){
             System.out.print("Enter strategy to use: ");
             int strategyChoice = input.inputInt();
-            if(strategyChoice < 0 || strategyChoice > impactStrategies.size()){
+            if(strategyChoice < 1 || strategyChoice > impactStrategies.size()){
                 System.out.println("Not a menu choice. ");
             } 
-            else{pas.calcImpact(name, impactStrategies.get(strategyChoice-1));}
+            else{double impactValue = pas.calcImpact(name, impactStrategies.get(strategyChoice-1));
+                System.out.println(ProductOutputFormatter.displayImpact(impactValue));
+                break;
+            }
         }
     }
 
@@ -155,17 +165,33 @@ public class productMenu {
             int lifespan = input.inputInt();
 
             productRecord productRequest = new productRecord(prodName, materials, category, lifespan);
+            try {
             boolean createStatus = pas.createProduct(productRequest);
 
             if(createStatus){
                 System.out.println("Product successfully created");
             } else{System.out.println("Error in creation");}
+        } catch (SaveErrorException e) {
+            System.err.println("Save error: " + e.getMessage());
+        } catch (IOException e) {
+            System.err.println("File error: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
+        }
         }
 
     //remove a product
     private void removeProduct(String name){
-        String message = pas.removeProduct(name);
-        System.out.println(message);
+        try {
+            String message = pas.removeProduct(name);
+            System.out.println(message);
+        } catch (SaveErrorException e) {
+            System.err.println("Save error: " + e.getMessage());
+        } catch (IOException e) {
+            System.err.println("File error: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
+        }
     }
     //display guidance
     private void showGuidance(String name){

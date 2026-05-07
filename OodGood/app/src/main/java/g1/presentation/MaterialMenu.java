@@ -1,9 +1,12 @@
 package g1.presentation;
 
+import java.io.IOException;
+
 import g1.application.CreateMaterialRequest;
 import g1.application.MaterialApplicationService;
 import g1.application.MaterialDto;
 import java.util.List;
+import g1.application.SaveErrorException;
 
 public class MaterialMenu {
 
@@ -88,9 +91,17 @@ public class MaterialMenu {
             emissionFactor = input.inputDouble();
 
         CreateMaterialRequest request = new CreateMaterialRequest(name, recyclingCategory, emissionFactor);
-        MaterialDto createdMaterial = mas.createMaterial(request);
+        try {
+            MaterialDto createdMaterial = mas.createMaterial(request);
             System.out.println("\nMaterial created:");
-            System.out.println(MaterialOutputFormatter.materialDto(createdMaterial));
+            System.out.println(MaterialOutputFormatter.materialDto(createdMaterial)      
+        } catch (SaveErrorException e) {
+            System.err.println("Save error: " + e.getMessage());
+        } catch (IOException e) {
+            System.err.println("File error: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
+        }
     }
 
     //Menyval för att ta bort Material
@@ -99,7 +110,15 @@ public class MaterialMenu {
         String name = input.inputString();
 
         System.out.println("\nRemoved material:");
-        mas.removeMaterial(name);
+        try {
+            mas.removeMaterial(name);
+        } catch (SaveErrorException e) {
+            System.err.println("Save error: " + e.getMessage());
+        } catch (IOException e){
+            System.err.println("File error: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
+        }
         
     }
 

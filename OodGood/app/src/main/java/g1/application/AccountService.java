@@ -1,5 +1,7 @@
 package g1.application;
 
+import java.io.IOException;
+
 import g1.domain.Account;
 import g1.infrastructure.AccountRepository;
 
@@ -34,23 +36,24 @@ public boolean checkUsername(String name){
     return repo.findByName(name) != null;
 }
 
-public void createAccount(AccountRecord rec){
+public void createAccount(AccountRecord rec) throws IOException, SaveErrorException {
 
     repo.add(new Account(rec.username(), rec.password(), rec.adminAccess()));
     try {
-        repo.save();}
-    catch (Exception e) {
-    System.out.println(e);}
+        repo.save();
+    } catch (SaveErrorException e) {
+    throw e;
+}
 }
 
-public void removeAccount(String user){
+public void removeAccount(String user) throws IOException, SaveErrorException{
 
     account = repo.findByName(user);
     repo.remove(account);
     try {
-        repo.save();}
-    catch (Exception e) {
-        System.out.println(e);
+        repo.save();
+    } catch (SaveErrorException e) {
+        throw e;
 }}}
 
 

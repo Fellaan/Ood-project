@@ -1,9 +1,14 @@
 package g1.application;
 
 import java.util.HashMap;
+import java.io.IOException;
 import java.util.ArrayList;
 import g1.domain.Product;
+import g1.domain.ImpactCalculationStrategy;
+import g1.domain.ImpactStrategyFactory;
+import g1.domain.Material;
 import g1.infrastructure.ProductRepository;
+import g1.infrastructure.MaterialRepository;
 
 
 public class ProductApplicationService {
@@ -12,55 +17,87 @@ public class ProductApplicationService {
     public record materialRecord(String name, double quantity){};
     public record productDTO(String name, String category, int lifespan){};
 
-    HashMap<String, Double> map = new HashMap<>();
-    ProductRepository repo;
+    private HashMap<Material, Double> map = new HashMap<>();
+    private ProductRepository prodRepo;
+    private MaterialRepository materialRepo;
+    private ImpactStrategyFactory impactStrategyFactory;
 
-    public ProductApplicationService(ProductRepository repo){
-        this.repo = repo;
+    public ProductApplicationService(ProductRepository productRepo, MaterialRepository materialRepo, ImpactStrategyFactory impactStrategyFactory){
+        this.prodRepo = productRepo;
+        this.materialRepo = materialRepo;
+        this.impactStrategyFactory = impactStrategyFactory;
     }
 
-    public boolean createProduct(productRecord createRequest){
+    public boolean createProduct(productRecord createRequest) throws SaveErrorException, IOException{
         for (materialRecord m : createRequest.materials()){
-            map.put(m.name(), m.quantity());
+            map.put(materialRepo.findByName(m.name()), m.quantity());
         }
         Product product = new Product(createRequest.name(), map, createRequest.lifespan(), createRequest.category());
-        repo.add(product);
+        prodRepo.add(product);
 
         try {
-            repo.save();
-        } catch (Exception e) {
+            prodRepo.save();
+        } catch (SaveErrorException e) {
             return false;
         }
         return true;
     }
 
-    public String removeProduct(String name){
-        Product p = repo.findByName(name);
+    public String removeProduct(String name) throws IOException, SaveErrorException{
+        Product p = prodRepo.findByName(name);
         if (p.equals(null)){
             return "Cannot be removed, product does not exist";
         }
         else{
-            repo.remove(p);
+            prodRepo.remove(p);
+            try {
+                prodRepo.save();
+            } catch (SaveErrorException e) {
+                throw e;
+            }
             return "Product removed successfully";
+        }
+    }
+
+    public boolean productExists(String name){
+        Product p = prodRepo.findByName(name);
+        if (p.equals(null)){
+            return false;
+        }
+        else{
+            return true;
         }
     }
 
     public ArrayList<String> showList(){
         ArrayList<String> nameList = new ArrayList<>();
-        for (String name : repo.listAll()){
+        for (String name : prodRepo.listAll()){
             nameList.add(name);
         }
         return nameList;
     }
 
     public productDTO getDetails(String name){
-        Product p = repo.findByName(name);
+        Product p = prodRepo.findByName(name);
         return new productDTO(p.getName(), p.getCategory(), p.getLifespan());
     }
 
-    // Metoder nedan behöver implementeras, har med guidance och impact strategies att göra.
-    public String calcImpact(String name, String strategyName){
-        return "";
+    public double calcImpact(String productName, String strategyName){ //bara use-cases
+
+        Product product = prodRepo.findByName(productName);
+        ImpactCalculationStrategy strategy = impactStrategyFactory.findByName(strategyName);
+        HashMap<Material, Double> materials = product.getMaterials();
+        int lifespan = product.getLifespan();
+        return strategy.calculateImpact(materials, lifespan);
+        
+    }
+
+    public ArrayList<String> loadImpactStrategies(){
+        ArrayList<String> strategyList = new ArrayList<>();
+        for (ImpactCalculationStrategy i : impactStrategyFactory.getStrategies()){
+            strategyList.add(i.getName());
+        }
+        return strategyList;
     }
 
     public String showGuidance(String name){
@@ -68,9 +105,7 @@ public class ProductApplicationService {
         return "Guidance";
     }
 
-    public ArrayList<String> loadImpactStrategies(){
-        return null;
-    }
+    
 
 
 

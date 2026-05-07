@@ -2,6 +2,7 @@ package g1.application;
 
 import g1.domain.Material;
 import g1.infrastructure.MaterialRepository;
+import java.io.IOException;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public MaterialApplicationService(MaterialRepository materialRepository){
     
 }
 // Method will be finished later
-public MaterialDto createMaterial(CreateMaterialRequest request){
+public MaterialDto createMaterial(CreateMaterialRequest request) throws SaveErrorException, IOException{
     Material material = new Material(
         request.name(),
         request.recyclingCategory(),
@@ -24,26 +25,32 @@ public MaterialDto createMaterial(CreateMaterialRequest request){
     );
     materialRepository.add(material); // Sparar materialet i repon
     try {
-        materialRepository.save();}
-    catch (Exception e) {
-    System.out.println(e);}
+        materialRepository.save();
+    } catch (SaveErrorException e) {
+    throw e;
+}
     return new MaterialDto( // Returerar ett record som används av menyn för att kunna använda prints
         material.getName(),
-        material.getrecyclingCategory(),
+        material.getRecyclingCategory(),
         material.getEmissionFactor()
     );
 }
 
 
 // Method will be finished later
-public MaterialDto removeMaterial(String name){
+public MaterialDto removeMaterial(String name) throws IOException, SaveErrorException{
     Material material = materialRepository.findByName(name);
         
     materialRepository.remove(material); // Tar bort materialet i repon
+    try {
+        materialRepository.save();
+    } catch (SaveErrorException e) {
+        throw e;
+    }
 
     return new MaterialDto( // Returerar record till MaterialMenu
         material.getName(),
-        material.getrecyclingCategory(),
+        material.getRecyclingCategory(),
         material.getEmissionFactor()
     );
 }
@@ -59,7 +66,7 @@ public List<MaterialDto> listMaterials(){
             // Omvandlar varje Material‑objekt till ett MaterialDto‑objekt
             .map(m -> new MaterialDto(
                 m.getName(),
-                m.getrecyclingCategory(),
+                m.getRecyclingCategory(),
                 m.getEmissionFactor()
             ))
             // Samlar tillbaka resultatet till en vanlig lista
@@ -73,7 +80,7 @@ public MaterialDto showInfo(String name){
 
     return new MaterialDto(
         material.getName(),
-        material.getrecyclingCategory(),
+        material.getRecyclingCategory(),
         material.getEmissionFactor()
     );
 }

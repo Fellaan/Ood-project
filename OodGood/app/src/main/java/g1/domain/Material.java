@@ -19,7 +19,7 @@ public class Material implements Serializable {
         return name;
     }
 
-    public String getrecyclingCategory(){
+    public String getRecyclingCategory(){
         return recyclingCategory;
     }
 
