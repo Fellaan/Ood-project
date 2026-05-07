@@ -5,6 +5,7 @@ import java.io.IOException;
 import g1.application.CreateMaterialRequest;
 import g1.application.MaterialApplicationService;
 import g1.application.MaterialDto;
+import java.util.List;
 import g1.application.SaveErrorException;
 
 public class MaterialMenu {
@@ -12,6 +13,7 @@ public class MaterialMenu {
     InputHandler input;
     MaterialApplicationService mas;
     String name;
+    double emissionFactor;
 
     public MaterialMenu(InputHandler input, MaterialApplicationService mas){
         this.input = input;
@@ -86,15 +88,13 @@ public class MaterialMenu {
             System.out.print("Category of Material: ");
             String recyclingCategory = input.inputString();
             System.out.print("Environmental Impact of Material: ");
-            int environmentalImpact = input.inputInt();
+            emissionFactor = input.inputDouble();
 
-        CreateMaterialRequest request = new CreateMaterialRequest(name, recyclingCategory, environmentalImpact);
+        CreateMaterialRequest request = new CreateMaterialRequest(name, recyclingCategory, emissionFactor);
         try {
             MaterialDto createdMaterial = mas.createMaterial(request);
-                System.out.println("\nMaterial created:");
-                System.out.println("Name: " + createdMaterial.name());
-                System.out.println("Category: " + createdMaterial.recyclingCategory());
-                System.out.println("Impact: " + createdMaterial.emissionFactor());
+            System.out.println("\nMaterial created:");
+            System.out.println(MaterialOutputFormatter.materialDto(createdMaterial)      
         } catch (SaveErrorException e) {
             System.err.println("Save error: " + e.getMessage());
         } catch (IOException e) {
@@ -122,12 +122,12 @@ public class MaterialMenu {
         
     }
 
-    //Menyval för att lista alla material
-    public void listMaterials(){
-        System.out.println("\nList of materials:");
-        mas.listMaterials();
-        
-        
+
+    //list all materials
+    private void listMaterials(){
+        for (MaterialDto mat: mas.listMaterials()){
+            System.out.println(MaterialOutputFormatter.displayMaterial(mat));
+        }
     }
 
     //Menyval för att visa information om ett Material
@@ -136,7 +136,7 @@ public class MaterialMenu {
         String name = input.inputString();
 
         System.out.println("\nSpecified material:");
-        mas.showInfo(name);
+        System.out.println(MaterialOutputFormatter.materialDto(mas.showInfo(name)));
         
     }
 
