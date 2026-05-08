@@ -17,7 +17,6 @@ public class ProductApplicationService {
     public record materialRecord(String name, double quantity){};
     public record productDTO(String name, String category, int lifespan){};
 
-    private HashMap<Material, Double> map = new HashMap<>();
     private ProductRepository prodRepo;
     private MaterialRepository materialRepo;
     private ImpactStrategyFactory impactStrategyFactory;
@@ -29,8 +28,12 @@ public class ProductApplicationService {
     }
 
     public boolean createProduct(productRecord createRequest) throws SaveErrorException, IOException{
+        HashMap<Material, Double> map = new HashMap<>();
         for (materialRecord m : createRequest.materials()){
             map.put(materialRepo.findByName(m.name()), m.quantity());
+            if (materialRepo.findByName(m.name()) == null){
+                return false;
+            }
         }
         Product product = new Product(createRequest.name(), map, createRequest.lifespan(), createRequest.category());
         prodRepo.add(product);
@@ -45,7 +48,7 @@ public class ProductApplicationService {
 
     public String removeProduct(String name) throws IOException, SaveErrorException{
         Product p = prodRepo.findByName(name);
-        if (p.equals(null)){
+        if (p == null){
             return "Cannot be removed, product does not exist";
         }
         else{
@@ -61,7 +64,7 @@ public class ProductApplicationService {
 
     public boolean productExists(String name){
         Product p = prodRepo.findByName(name);
-        if (p.equals(null)){
+        if (p == null){
             return false;
         }
         else{
