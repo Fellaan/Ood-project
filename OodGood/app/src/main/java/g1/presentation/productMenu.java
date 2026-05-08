@@ -10,14 +10,15 @@ import g1.application.ProductApplicationService.materialRecord;
 
 public class productMenu {
     InputHandler input;
-    ArrayList<materialRecord> materials = new ArrayList<>();
     ArrayList<String> impactStrategies;
     ProductApplicationService pas;
     String choice;
     String name;
+    String prodName;
     int amount;
     int lifespan;
     boolean materialDuplicated = false;
+    boolean nameOccupied;
 
     public productMenu(InputHandler input, ProductApplicationService pas) {
         this.input = input;
@@ -43,9 +44,7 @@ public class productMenu {
                     showList();
                     break;
                 case "4":   // Visar information på en produkt som specifieras
-                    System.out.print("What is the name of the product?: ");
-                    name = input.inputString();
-                    getDetails(name);
+                    getDetails();
                     break;
                 case "5":  //factory strategy will be implemented here
                     System.out.print("Name of product?: ");
@@ -78,7 +77,14 @@ public class productMenu {
         }
     }
     //get details of specific product
-    private void getDetails(String name){
+    private void getDetails(){
+        System.out.print("What is the name of the product?: ");
+        name = input.inputString();
+        if (!(pas.productExists(name))){
+            System.out.println("There is not a product with that name.");
+            return;
+        }
+
         productDTO product = pas.getDetails(name);
         if (product.name().equals(null)){
             System.out.println("Product you requested does not exist.");
@@ -130,11 +136,20 @@ public class productMenu {
     }
     //creates a product through a record
     private void createProduct(){
-        materialDuplicated = false;
-        System.out.print("Enter product name: " );
-        String prodName = input.inputString();
+        ArrayList<materialRecord> materials = new ArrayList<>();
+
+            do {
+                    nameOccupied = false;
+                    System.out.print("Enter product name: " );
+                    prodName = input.inputString();
+                    if (pas.productExists(prodName)){
+                        nameOccupied = true;
+                        System.out.println("\nA product already has this name, choose another name.");
+                    }
+                } while (nameOccupied);
                     
             do {
+                materialDuplicated = false;
                 System.out.print("What material do you want? ");
                 name = input.inputString();
 
@@ -148,7 +163,7 @@ public class productMenu {
                     }
                 }
                 
-                if (materialDuplicated = false){
+                if (materialDuplicated == false){
                         materialRecord requestedMaterial = new materialRecord(name, weight);
                         materials.add(requestedMaterial);
                     }

@@ -1,8 +1,9 @@
 package g1.domain;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class Product {
+public class Product implements Serializable{
 
     String name;
     String category;
