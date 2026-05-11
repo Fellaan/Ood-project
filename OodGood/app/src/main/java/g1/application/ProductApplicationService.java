@@ -13,7 +13,7 @@ import g1.infrastructure.MaterialRepository;
 
 public class ProductApplicationService {
     
-    public record productRecord(String name, ArrayList<materialRecord> materials, String category, int lifespan){};
+    public record productRecord(String name, ArrayList<materialRecord> materials, int lifespan){};
     public record materialRecord(String name, double quantity){};
     public record productDTO(String name, String category, int lifespan){};
 
@@ -35,7 +35,7 @@ public class ProductApplicationService {
                 return false;
             }
         }
-        Product product = new Product(createRequest.name(), map, createRequest.lifespan(), createRequest.category());
+        Product product = new Product(createRequest.name(), map, createRequest.lifespan());
         prodRepo.add(product);
 
         try {
@@ -82,7 +82,7 @@ public class ProductApplicationService {
 
     public productDTO getDetails(String name){
         Product p = prodRepo.findByName(name);
-        return new productDTO(p.getName(), p.getCategory(), p.getLifespan());
+        return new productDTO(p.getName(), p.getCategory().toString(), p.getLifespan());
     }
 
     public double calcImpact(String productName, String strategyName){ //bara use-cases

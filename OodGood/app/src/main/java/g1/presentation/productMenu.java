@@ -173,13 +173,10 @@ public class productMenu {
 
             } while (choice.equals("y"));
 
-            System.out.print("Category of product? ");
-            String category = input.inputString();
-
             System.out.print("Lifespan of product? ");
             int lifespan = input.inputInt();
 
-            productRecord productRequest = new productRecord(prodName, materials, category, lifespan);
+            productRecord productRequest = new productRecord(prodName, materials, lifespan);
             try {
             boolean createStatus = pas.createProduct(productRequest);
 
