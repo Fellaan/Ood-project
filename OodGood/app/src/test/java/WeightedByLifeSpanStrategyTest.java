@@ -3,6 +3,8 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import  org.junit.jupiter.api.BeforeEach;
 
 import g1.domain.*;
@@ -44,6 +46,7 @@ public class WeightedByLifeSpanStrategyTest {
 
         // Assert
         assertEquals(2.0, result);
+        assertNotNull(result);
     }
 
 
@@ -57,6 +60,7 @@ public class WeightedByLifeSpanStrategyTest {
 
         // Assert
         assertEquals(0.0, result);
+        assertNotNull(result);
     }
 }
 

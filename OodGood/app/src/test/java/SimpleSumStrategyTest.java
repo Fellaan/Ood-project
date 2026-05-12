@@ -3,6 +3,8 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import  org.junit.jupiter.api.BeforeEach;
 
 import g1.domain.*;
@@ -42,6 +44,7 @@ ImpactCalculationStrategy strategy;
 
         // Assert
         assertEquals(20.0, result);
+        assertNotNull(result);
     }
 
 
@@ -55,5 +58,6 @@ ImpactCalculationStrategy strategy;
 
         // Assert
         assertEquals(0.0, result);
+        assertNotNull(result);
     }
 }
