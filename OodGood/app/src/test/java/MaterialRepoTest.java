@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 import g1.application.LoadErrorException;
+import g1.application.MaterialDto;
 import g1.application.SaveErrorException;
 import g1.domain.Material;
 import g1.infrastructure.MaterialRepository;
@@ -133,6 +134,73 @@ class MaterialRepoTest {
 
     // Act + Assert
     assertThrows(LoadErrorException.class, () -> matRepo.loadFromFile());
+    }
+
+
+    @Test void findByNameShouldReturnCorrectMaterial() {
+    // ARRANGE
+    MaterialDto woodData = new MaterialDto("Wood", "Wood", 2);
+    MaterialDto steelData = new MaterialDto("Steel", "Steel", 10);
+    MaterialDto cottonData = new MaterialDto("Cotton", "Textile", 1);
+
+    Material wood = new Material(woodData.name(), woodData.recyclingCategory(), woodData.emissionFactor());
+    Material steel = new Material(steelData.name(), steelData.recyclingCategory(), steelData.emissionFactor());
+    Material cotton = new Material(cottonData.name(), cottonData.recyclingCategory(), cottonData.emissionFactor());
+
+    matRepo.add(wood);
+    matRepo.add(steel);
+    matRepo.add(cotton);
+
+    // ACT
+    Material actual = matRepo.findByName("Cotton");
+
+    // ASSERT
+    assertNotNull(actual);
+    assertEquals("Cotton", actual.getName());
+    assertEquals("Textile", actual.getRecyclingCategory());
+    assertEquals(1, actual.getEmissionFactor());
+}
+
+
+    
+    @Test void matRepoShouldReturnListWithAllMaterials() {
+        //ARRANGE
+        ArrayList<Material> materials = new ArrayList<>();
+        materials.add(new Material("Wood", "Wood", 2));
+        materials.add(new Material("Steel", "Steel", 10));
+        materials.add(new Material("Cotton", "Textile", 1));
+
+        //ACT
+        ArrayList<Material> actual = matRepo.findAll();
+        ArrayList<Material> expected = materials;
+
+        //ASSERT
+        assertEquals(expected, actual);
+    }
+
+
+    @Test void matRepoShouldBeAbleToRemoveObjectFromList() {
+        //ARRANGE
+        ArrayList<Material> materials = new ArrayList<>();
+        Material wood = new Material("Wood", "Wood", 2);
+        Material steel = new Material("Steel", "Steel", 10);
+        Material cotton = new Material("Cotton", "Textile", 1);
+
+        materials.add(wood);
+        materials.add(steel);
+        materials.add(cotton);
+
+
+        //ACT
+        matRepo.remove(cotton);
+
+        //ASSERT
+        ArrayList<Material> actual = matRepo.findAll();
+
+        assertEquals(2, actual.size());
+        assertFalse(actual.contains(cotton));
+        assertTrue(actual.contains(wood));
+        assertTrue(actual.contains(steel));
     }
 
 }
