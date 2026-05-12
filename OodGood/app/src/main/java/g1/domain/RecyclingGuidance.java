@@ -19,7 +19,7 @@ public class RecyclingGuidance {
         }
 
         else{
-            return CategoryEnum.MIXEDMATERIAL; //Finns det material med olika categories så blir kategorien Mixed Material.
+            return CategoryEnum.MixedMaterial; //Finns det material med olika categories så blir kategorien Mixed Material.
         }
 
     }

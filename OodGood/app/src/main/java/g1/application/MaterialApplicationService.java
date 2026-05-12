@@ -95,6 +95,10 @@ public boolean checkMaterial(String name){
 
 public boolean categoryExists(String name){
     try {
+        // En användare ska inte kunna manuellt sätta MixedMaterial category. Menat för produkt endast. 
+        if(name.equals("MixedMaterial")){
+            return false;
+        }
         CategoryEnum.valueOf(name);
         return true;
     } catch (IllegalArgumentException e) {

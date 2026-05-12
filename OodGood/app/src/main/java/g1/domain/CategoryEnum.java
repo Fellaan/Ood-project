@@ -7,8 +7,8 @@ public enum CategoryEnum {
     Metal("Put in recycling bin for Metals"),
     Glass("Put in recycling bin for Glass"),
     Cardboard("Put in recycling bin for CardBoard"),
-
-    MIXEDMATERIAL("Släng i blandat");
+    Textile("Put in recycling bin for Textiles"),
+    MixedMaterial("Take to a special station");
 
     private final String instruction;
 
