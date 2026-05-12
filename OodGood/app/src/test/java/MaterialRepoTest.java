@@ -7,9 +7,11 @@ import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import g1.application.CreateMaterialRequest;
 import g1.application.LoadErrorException;
 import g1.application.MaterialDto;
 import g1.application.SaveErrorException;
@@ -137,7 +139,7 @@ class MaterialRepoTest {
     }
 
 
-    @Test void findByNameShouldReturnCorrectMaterial() {
+    @Test void matRepofindByNameShouldReturnCorrectMaterial() {
     // ARRANGE
     MaterialDto woodData = new MaterialDto("Wood", "Wood", 2);
     MaterialDto steelData = new MaterialDto("Steel", "Steel", 10);
@@ -163,32 +165,34 @@ class MaterialRepoTest {
 
 
     
-    @Test void matRepoShouldReturnListWithAllMaterials() {
-        //ARRANGE
-        ArrayList<Material> materials = new ArrayList<>();
-        materials.add(new Material("Wood", "Wood", 2));
-        materials.add(new Material("Steel", "Steel", 10));
-        materials.add(new Material("Cotton", "Textile", 1));
-
-        //ACT
-        ArrayList<Material> actual = matRepo.findAll();
-        ArrayList<Material> expected = materials;
-
-        //ASSERT
-        assertEquals(expected, actual);
-    }
-
-
-    @Test void matRepoShouldBeAbleToRemoveObjectFromList() {
-        //ARRANGE
-        ArrayList<Material> materials = new ArrayList<>();
+    @Test void matRepofindAllShouldReturnListWithAllMaterials() {
+        // ARRANGE
         Material wood = new Material("Wood", "Wood", 2);
         Material steel = new Material("Steel", "Steel", 10);
         Material cotton = new Material("Cotton", "Textile", 1);
 
-        materials.add(wood);
-        materials.add(steel);
-        materials.add(cotton);
+        matRepo.add(wood);
+        matRepo.add(steel);
+        matRepo.add(cotton);
+
+        // ACT
+        List<Material> actual = matRepo.findAll();
+
+        // ASSERT
+        List<Material> expected = List.of(wood, steel, cotton);
+        assertEquals(expected, actual);
+    }
+
+
+    @Test void matRepoRemoveShouldBeAbleToRemoveObjectFromList() {
+        //ARRANGE
+        Material wood = new Material("Wood", "Wood", 2);
+        Material steel = new Material("Steel", "Steel", 10);
+        Material cotton = new Material("Cotton", "Textile", 1);
+
+        matRepo.add(wood);
+        matRepo.add(steel);
+        matRepo.add(cotton);
 
 
         //ACT
@@ -201,6 +205,21 @@ class MaterialRepoTest {
         assertFalse(actual.contains(cotton));
         assertTrue(actual.contains(wood));
         assertTrue(actual.contains(steel));
+    }
+
+    @Test void matRepoAddShouldAddMaterialToList() {
+        //ARRANGE
+        CreateMaterialRequest data = new CreateMaterialRequest("Wood", "Wood", 2);
+        Material wood = new Material(data.name(), data.recyclingCategory(), data.emissionFactor());
+
+        // ACT
+        matRepo.add(wood);
+
+        // ASSERT
+        ArrayList<Material> actual = matRepo.findAll();
+
+        assertEquals(1, actual.size());
+        assertTrue(actual.contains(wood));
     }
 
 }
