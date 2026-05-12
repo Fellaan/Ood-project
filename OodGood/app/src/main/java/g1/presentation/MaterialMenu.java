@@ -12,6 +12,7 @@ public class MaterialMenu {
     InputHandler input;
     MaterialApplicationService mas;
     String name;
+    String recyclingCategory;
     double emissionFactor;
 
     public MaterialMenu(InputHandler input, MaterialApplicationService mas){
@@ -76,12 +77,15 @@ public class MaterialMenu {
     //Menyval för att skapa material
     public void createMaterial(){
         do {
-
             System.out.print("Name of Material: ");
             name = input.inputString();
         } while (mas.checkMaterial(name));
+
+        do {
             System.out.print("Category of Material: ");
-            String recyclingCategory = input.inputString();
+            recyclingCategory = input.inputString();
+        } while (!(mas.categoryExists(recyclingCategory)));
+            
             System.out.print("Environmental Impact of Material: ");
             emissionFactor = input.inputDouble();
 

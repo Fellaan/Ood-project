@@ -17,6 +17,7 @@ public class SimpleSumStrategy implements ImpactCalculationStrategy {
         return totalImpact;
     }
 
+    
     @Override
     public String getName(){
         return "Simple Sum Strategy";
