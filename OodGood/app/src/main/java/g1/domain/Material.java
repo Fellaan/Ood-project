@@ -5,10 +5,10 @@ import java.io.Serializable;
 public class Material implements Serializable {
 
     String name;
-    String recyclingCategory;
+    CategoryEnum recyclingCategory;
     double emissionFactor;
 
-    public Material(String name, String recyclingCategory, double emissionFactor){
+    public Material(String name, CategoryEnum recyclingCategory, double emissionFactor){
         this.name = name;
         this.recyclingCategory = recyclingCategory;
         this.emissionFactor = emissionFactor;
@@ -19,7 +19,7 @@ public class Material implements Serializable {
         return name;
     }
 
-    public String getRecyclingCategory(){
+    public CategoryEnum getRecyclingCategory(){
         return recyclingCategory;
     }
 

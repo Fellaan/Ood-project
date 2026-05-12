@@ -1,5 +1,6 @@
 package g1.application;
 
+import g1.domain.CategoryEnum;
 import g1.domain.Material;
 import g1.infrastructure.MaterialRepository;
 import java.io.IOException;
@@ -20,7 +21,7 @@ public MaterialApplicationService(MaterialRepository materialRepository){
 public MaterialDto createMaterial(CreateMaterialRequest request) throws SaveErrorException, IOException{
     Material material = new Material(
         request.name(),
-        request.recyclingCategory(),
+        CategoryEnum.valueOf(request.recyclingCategory()),
         request.emissionFactor()
     );
     materialRepository.add(material); // Sparar materialet i repon
@@ -31,7 +32,7 @@ public MaterialDto createMaterial(CreateMaterialRequest request) throws SaveErro
 }
     return new MaterialDto( // Returerar ett record som används av menyn för att kunna använda prints
         material.getName(),
-        material.getRecyclingCategory(),
+        material.getRecyclingCategory().toString(),
         material.getEmissionFactor()
     );
 }
@@ -50,7 +51,7 @@ public MaterialDto removeMaterial(String name) throws IOException, SaveErrorExce
 
     return new MaterialDto( // Returerar record till MaterialMenu
         material.getName(),
-        material.getRecyclingCategory(),
+        material.getRecyclingCategory().toString(),
         material.getEmissionFactor()
     );
 }
@@ -66,7 +67,7 @@ public List<MaterialDto> listMaterials(){
             // Omvandlar varje Material‑objekt till ett MaterialDto‑objekt
             .map(m -> new MaterialDto(
                 m.getName(),
-                m.getRecyclingCategory(),
+                m.getRecyclingCategory().toString(),
                 m.getEmissionFactor()
             ))
             // Samlar tillbaka resultatet till en vanlig lista
@@ -80,7 +81,7 @@ public MaterialDto showInfo(String name){
     try {
     return new MaterialDto(
         material.getName(),
-        material.getRecyclingCategory(),
+        material.getRecyclingCategory().toString(),
         material.getEmissionFactor()
     );
 } catch (NullPointerException e) {
@@ -90,6 +91,19 @@ public MaterialDto showInfo(String name){
 
 public boolean checkMaterial(String name){
     return materialRepository.findByName(name) != null;
+}
+
+public boolean categoryExists(String name){
+    try {
+        // En användare ska inte kunna manuellt sätta MixedMaterial category. Menat för produkt endast. 
+        if(name.equals("MixedMaterial")){
+            return false;
+        }
+        CategoryEnum.valueOf(name);
+        return true;
+    } catch (IllegalArgumentException e) {
+        return false;
+    }
 }
 
 }
