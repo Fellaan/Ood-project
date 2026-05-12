@@ -19,19 +19,19 @@ ImpactCalculationStrategy strategy;
 
           Material plastic = new Material(
                 "Plastic",
-                "Recycle",
+                CategoryEnum.Plastic,
                 5.0
         );
 
-        Material glass = new Material(
-                "Glass",
-                "Recycle",
+        Material metal = new Material(
+                "Metal",
+                CategoryEnum.Metal,
                 2.5);
 
         materials = new HashMap<>();
 
         materials.put(plastic, 2.0);
-        materials.put(glass, 4.0);
+        materials.put(metal, 4.0);
 
     }
 
