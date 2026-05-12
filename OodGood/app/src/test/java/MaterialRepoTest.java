@@ -15,6 +15,7 @@ import g1.application.CreateMaterialRequest;
 import g1.application.LoadErrorException;
 import g1.application.MaterialDto;
 import g1.application.SaveErrorException;
+import g1.domain.CategoryEnum;
 import g1.domain.Material;
 import g1.infrastructure.MaterialRepository;
 
@@ -44,8 +45,8 @@ class MaterialRepoTest {
         @SuppressWarnings("unchecked")
         ArrayList<Material> materials = (ArrayList<Material>) materialsField.get(matRepo);
 
-        materials.add(new Material("Wood", "Wood", 2));
-        materials.add(new Material("Steel","Steel", 10));
+        materials.add(new Material("Wood", CategoryEnum.Combustible, 2));
+        materials.add(new Material("Steel",CategoryEnum.Metal, 10));
 
         // Act
         matRepo.save();
@@ -86,8 +87,8 @@ class MaterialRepoTest {
         filenamField.set(matRepo, filePath.toString());
 
         ArrayList<Material> original = new ArrayList<>();
-        original.add(new Material("Wood", "Wood", 2));
-        original.add(new Material("Steel", "Steel", 10));
+        original.add(new Material("Wood", CategoryEnum.Combustible, 2));
+        original.add(new Material("Steel", CategoryEnum.Metal, 10));
 
         try (ObjectOutputStream out = new ObjectOutputStream(Files.newOutputStream(filePath))) {
             out.writeObject(original);
@@ -141,13 +142,13 @@ class MaterialRepoTest {
 
     @Test void matRepofindByNameShouldReturnCorrectMaterial() {
     // ARRANGE
-    MaterialDto woodData = new MaterialDto("Wood", "Wood", 2);
-    MaterialDto steelData = new MaterialDto("Steel", "Steel", 10);
+    MaterialDto woodData = new MaterialDto("Wood", "Combustible", 2);
+    MaterialDto steelData = new MaterialDto("Steel", "Metal", 10);
     MaterialDto cottonData = new MaterialDto("Cotton", "Textile", 1);
 
-    Material wood = new Material(woodData.name(), woodData.recyclingCategory(), woodData.emissionFactor());
-    Material steel = new Material(steelData.name(), steelData.recyclingCategory(), steelData.emissionFactor());
-    Material cotton = new Material(cottonData.name(), cottonData.recyclingCategory(), cottonData.emissionFactor());
+    Material wood = new Material(woodData.name(), CategoryEnum.valueOf(woodData.recyclingCategory()), woodData.emissionFactor());
+    Material steel = new Material(steelData.name(), CategoryEnum.valueOf(steelData.recyclingCategory()), steelData.emissionFactor());
+    Material cotton = new Material(cottonData.name(), CategoryEnum.valueOf(cottonData.recyclingCategory()), cottonData.emissionFactor());
 
     matRepo.add(wood);
     matRepo.add(steel);
@@ -159,7 +160,7 @@ class MaterialRepoTest {
     // ASSERT
     assertNotNull(actual);
     assertEquals("Cotton", actual.getName());
-    assertEquals("Textile", actual.getRecyclingCategory());
+    assertEquals(CategoryEnum.Textile, actual.getRecyclingCategory());
     assertEquals(1, actual.getEmissionFactor());
 }
 
@@ -167,9 +168,9 @@ class MaterialRepoTest {
     
     @Test void matRepofindAllShouldReturnListWithAllMaterials() {
         // ARRANGE
-        Material wood = new Material("Wood", "Wood", 2);
-        Material steel = new Material("Steel", "Steel", 10);
-        Material cotton = new Material("Cotton", "Textile", 1);
+        Material wood = new Material("Wood", CategoryEnum.Combustible, 2);
+        Material steel = new Material("Steel", CategoryEnum.Metal, 10);
+        Material cotton = new Material("Cotton", CategoryEnum.Textile, 1);
 
         matRepo.add(wood);
         matRepo.add(steel);
@@ -186,9 +187,9 @@ class MaterialRepoTest {
 
     @Test void matRepoRemoveShouldBeAbleToRemoveObjectFromList() {
         //ARRANGE
-        Material wood = new Material("Wood", "Wood", 2);
-        Material steel = new Material("Steel", "Steel", 10);
-        Material cotton = new Material("Cotton", "Textile", 1);
+        Material wood = new Material("Wood", CategoryEnum.Combustible, 2);
+        Material steel = new Material("Steel", CategoryEnum.Metal, 10);
+        Material cotton = new Material("Cotton", CategoryEnum.Textile, 1);
 
         matRepo.add(wood);
         matRepo.add(steel);
@@ -209,8 +210,8 @@ class MaterialRepoTest {
 
     @Test void matRepoAddShouldAddMaterialToList() {
         //ARRANGE
-        CreateMaterialRequest data = new CreateMaterialRequest("Wood", "Wood", 2);
-        Material wood = new Material(data.name(), data.recyclingCategory(), data.emissionFactor());
+        CreateMaterialRequest data = new CreateMaterialRequest("Wood", "Combustible", 2);
+        Material wood = new Material(data.name(), CategoryEnum.valueOf(data.recyclingCategory()), data.emissionFactor());
 
         // ACT
         matRepo.add(wood);

@@ -5,13 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import g1.domain.Material;
+import g1.domain.*;
 
 class MaterialTest {
     Material material;
 
     @BeforeEach void setUp(){
-        material = new Material("Plast", "Plast", 2);
+        material = new Material("Plast", CategoryEnum.Plastic, 2);
     }
 
     @Test void MaterialShouldReturnName() {
@@ -25,8 +25,8 @@ class MaterialTest {
     }
 
     @Test void MaterialShouldReturnCategory() {
-        String actual = material.getRecyclingCategory();
-        String expected = "Plast";
+        CategoryEnum actual = material.getRecyclingCategory();
+        CategoryEnum expected = CategoryEnum.Plastic;
 
         assertEquals(expected, actual);
         assertNotNull(actual);
