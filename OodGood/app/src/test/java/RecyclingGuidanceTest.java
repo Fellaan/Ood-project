@@ -5,12 +5,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class RecyclingGuidanceTest {
-    ArrayList<Material> listOfDifferentMaterialsAndCategories = new ArrayList<>();
-    ArrayList<Material> listWithOneMaterial = new ArrayList<>();
-    ArrayList<Material> listOfMultipleMaterialsAndSameCategory = new ArrayList<>();
+    HashMap<Material, Double> mapOfDifferentMaterialsAndCategories = new HashMap<>();
+    HashMap<Material, Double> mapWithOneMaterial = new HashMap<>();
+    HashMap<Material, Double> mapOfMultipleMaterialsAndSameCategory = new HashMap<>();
 
     
     @BeforeAll 
@@ -20,20 +21,20 @@ class RecyclingGuidanceTest {
         Material Plastic = new Material("Plastic", CategoryEnum.Plastic, 5);
         Material Tungsten = new Material("Tungsten", CategoryEnum.Metal, 50);
 
-        listOfDifferentMaterialsAndCategories.add(Wood);
-        listOfDifferentMaterialsAndCategories.add(Aluminium);
-        listOfDifferentMaterialsAndCategories.add(Plastic);
+        mapOfDifferentMaterialsAndCategories.put(Wood, 10.0);
+        mapOfDifferentMaterialsAndCategories.put(Aluminium, 10.0);
+        mapOfDifferentMaterialsAndCategories.put(Plastic, 10.0);
 
-        listWithOneMaterial.add(Wood);
+        mapWithOneMaterial.put(Wood, 10.0);
 
-        listOfMultipleMaterialsAndSameCategory.add(Tungsten);
-        listOfMultipleMaterialsAndSameCategory.add(Aluminium);
+        mapOfMultipleMaterialsAndSameCategory.put(Tungsten, 10.0);
+        mapOfMultipleMaterialsAndSameCategory.put(Aluminium, 10.0);
 
     }
 
     @Test void ShouldReturnMixedMaterials(){
 
-        CategoryEnum category = RecyclingGuidance.getGuidance(listOfDifferentMaterialsAndCategories);
+        CategoryEnum category = RecyclingGuidance.getGuidance(mapOfDifferentMaterialsAndCategories);
 
         assertEquals(CategoryEnum.MixedMaterial, category);
         assertNotNull(category);
@@ -42,7 +43,7 @@ class RecyclingGuidanceTest {
 
     @Test void ShouldReturnCombustibleCategory(){
 
-        CategoryEnum category = RecyclingGuidance.getGuidance(listWithOneMaterial);
+        CategoryEnum category = RecyclingGuidance.getGuidance(mapWithOneMaterial);
 
         assertEquals(CategoryEnum.Combustible, category);
         assertNotNull(category);
@@ -50,7 +51,7 @@ class RecyclingGuidanceTest {
 
     @Test void ShouldReturnMetalCategory(){
 
-        CategoryEnum category = RecyclingGuidance.getGuidance(listOfMultipleMaterialsAndSameCategory);
+        CategoryEnum category = RecyclingGuidance.getGuidance(mapOfMultipleMaterialsAndSameCategory);
 
         assertEquals(CategoryEnum.Metal, category);
         assertNotNull(category);
