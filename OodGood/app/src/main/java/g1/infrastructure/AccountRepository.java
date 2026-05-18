@@ -28,7 +28,7 @@ public class AccountRepository implements Repository<Account>, Serializable {
             out.close();
             fileOut.close();
     } catch (IOException e) {
-        throw new SaveErrorException("Failed to save to file.");
+        throw new SaveErrorException("Failed to save to account file.");
     }
 }
 
@@ -49,7 +49,7 @@ public class AccountRepository implements Repository<Account>, Serializable {
             ObjectInputStream in = new ObjectInputStream(fileIn)) {
             accounts = (ArrayList<Account>) in.readObject();
         } catch (IOException e) {
-            throw new LoadErrorException("Failed to load from file.");
+            throw new LoadErrorException("Failed to load from account file.");
         }
 }
 

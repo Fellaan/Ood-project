@@ -28,7 +28,7 @@ public class MaterialRepository implements Repository<Material> , Serializable{
             out.close();
             fileOut.close();
     } catch (IOException e) {
-        throw new SaveErrorException("Failed to save to file.");
+        throw new SaveErrorException("Failed to save to material file.");
     }
 }
     @SuppressWarnings("unchecked")
@@ -40,7 +40,7 @@ public class MaterialRepository implements Repository<Material> , Serializable{
             ObjectInputStream in = new ObjectInputStream(fileIn)) {
                 materials = (ArrayList<Material>) in.readObject();
     } catch (IOException e) {
-        throw new LoadErrorException("Failed to load from file");
+        throw new LoadErrorException("Failed to load from material file");
     } 
 
 

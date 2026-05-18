@@ -1,7 +1,0 @@
-// package g1.infrastructure;
-
-// import g1.application.Repository;
-
-// public class RecyclingRepository implements Repository{
-
-// }

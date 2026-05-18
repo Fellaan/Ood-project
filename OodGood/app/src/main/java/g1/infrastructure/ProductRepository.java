@@ -28,7 +28,7 @@ public class ProductRepository implements Repository<Product>, Serializable {
             out.close();
             fileOut.close();
     } catch (IOException e) {
-        throw new SaveErrorException("Failed to save to file.");
+        throw new SaveErrorException("Failed to save to material file.");
     }
 }
 
@@ -41,7 +41,7 @@ public class ProductRepository implements Repository<Product>, Serializable {
             ObjectInputStream in = new ObjectInputStream(fileIn)) {
                 products = (ArrayList<Product>) in.readObject();
             } catch (IOException e) {
-                throw new LoadErrorException("Failed to load from file.");
+                throw new LoadErrorException("Failed to load from product file.");
             }
     }
 
