@@ -2,7 +2,6 @@ package g1.domain;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.ArrayList;
 
 public class Product implements Serializable{
 
@@ -15,13 +14,7 @@ public class Product implements Serializable{
         this.name = name;
         this.materials = materials;
         this.lifespan = lifespan;
-
-        ArrayList<Material> materialObjects = new ArrayList<>();
-        for (HashMap.Entry<Material, Double> m : materials.entrySet()){
-            materialObjects.add(m.getKey());
-        }
-
-        this.category = RecyclingGuidance.getGuidance(materialObjects); 
+        this.category = RecyclingGuidance.getGuidance(materials); 
     }
 
     public String getName(){
