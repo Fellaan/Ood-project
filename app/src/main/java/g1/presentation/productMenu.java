@@ -57,9 +57,14 @@ public class productMenu {
                     }
                     break;
                 case "6":
-                    System.out.print("For what Product?: ");
+                    System.out.print("Name of product?: ");
                     name = input.inputString();
-                    showGuidance(name);
+                    if (pas.productExists(name)){
+                        showGuidance(name);
+                    }
+                    else{
+                        System.out.println("That product does not exist.");
+                    }
                     break;
                 case "9":
                     System.out.println("Exiting product menu...");
@@ -208,7 +213,7 @@ public class productMenu {
     //display guidance
     private void showGuidance(String name){
         String guidance = pas.showGuidance(name);
-        ProductOutputFormatter.displayGuidance(guidance);
+        System.out.println(ProductOutputFormatter.displayGuidance(guidance));
     }
 
 }
