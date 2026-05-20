@@ -104,8 +104,8 @@ public class ProductApplicationService {
     }
 
     public String showGuidance(String name){
-
-        return "Guidance";
+        Product p = prodRepo.findByName(name);
+        return p.getCategoryInstruction();
     }
 
     
